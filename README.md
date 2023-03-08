@@ -31,7 +31,7 @@ We have prototyped a design which you can view [here](https://www.figma.com/prot
 <table>
   <tr>
 <td><img src="hhttps://raw.githubusercontent.com/alpaDrive/app/main/assets/screenshot-1.png "></td>
-  <td><img src="https://raw.githubusercontent.com/alpaDrive/app/main/.github/screenshots/screenshot-2.png"></td>
+  <td><img src="https://raw.githubusercontent.com/alpaDrive/app/main/assets/screenshot-2.png"></td>
    </tr>
 </table>
 
