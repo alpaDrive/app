@@ -10,10 +10,10 @@ The alpaDrive mobile app
     - [Design & Prototyping](#design--prototyping)
     - [Intended functions](#intended-functions)
 
-* Setup guide
-    - Prerequisites
-    - Installation Instructions
-    - Known Issues
+* [Setup guide](#setup-guide)
+    - [Prerequisites](#prerequisites)
+    - [Installation Instructions](#installation-instructions)
+    - [Known Issues](#known-issues)
 
 ## What's this?
 Users of alpaDrive require an interface that is easily accessible to them from anywhere, to control and monitor their connected vehicle(s). The API server supports adding and managing multiple vehicles to a single user account as well.
@@ -30,7 +30,7 @@ We have prototyped a design which you can view [here](https://www.figma.com/prot
 *This is just a prototype design*
 <table>
   <tr>
-<td><img src="https://raw.githubusercontent.com/alpaDrive/app/main/.github/screenshots/screenshot-1.png"></td>
+<td><img src="hhttps://raw.githubusercontent.com/alpaDrive/app/main/assets/screenshot-1.png "></td>
   <td><img src="https://raw.githubusercontent.com/alpaDrive/app/main/.github/screenshots/screenshot-2.png"></td>
    </tr>
 </table>
@@ -96,3 +96,6 @@ Follow this setup guide for development on your local machine
     $ npx expo start
     ```
 When the server starts, press `a` to start the app on your Android emulator, or scan he QR code via the [Expo Go](https://expo.dev/client) app to open your rendered code :beers:.
+
+### Known issues
+As of now, no issues are known.
