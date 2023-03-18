@@ -30,7 +30,7 @@ We have prototyped a design which you can view [here](https://www.figma.com/prot
 *This is just a prototype design*
 <table>
   <tr>
-<td><img src="https://user-images.githubusercontent.com/50231856/226117338-8fe642e0-b8f3-4164-99a3-dd87f086a0bd.png"></td>
+  <td><img src="https://user-images.githubusercontent.com/50231856/226117338-8fe642e0-b8f3-4164-99a3-dd87f086a0bd.png"></td>
   <td><img src="https://user-images.githubusercontent.com/50231856/226117343-23f9ed40-5844-4442-915d-57fb48b95c43.png"></td>
    </tr>
 </table>
