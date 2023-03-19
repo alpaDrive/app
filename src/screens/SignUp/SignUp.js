@@ -16,10 +16,8 @@ const SignUp = ({ navigation }) => {
         // get the value from secure store to see if it exists
         let result = SecureStore.getItemAsync("alpaDrive");
         if (result) {
-            console.log('Go home')
-        } else {
-            console.log('Stay here')
-        }
+            navigation.navigate('Profile')
+        } 
     }, [])
 
     const submit = async () => {
