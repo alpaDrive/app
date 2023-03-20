@@ -24,7 +24,8 @@ export default StyleSheet.create({
         alignItems:'center'
     },
     user:{
-        fontSize:30
+        fontSize:30,
+        color: 'white'
     },
     details:{
         flex:1,

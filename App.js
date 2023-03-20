@@ -7,13 +7,14 @@ import SignUp from './src/screens/SignUp/SignUp';
 
 const Stack = createNativeStackNavigator()
 
-export default function App() {
+export default function App () {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name='Login' component={Login} options={{ headerShown: false }} />
-        <Stack.Screen name='SignUp' component={SignUp} options={{ headerShown: false }} />
-        <Stack.Screen name='Profile' component={Profile} options={{headerShown:false}} />
+        <Stack.Screen name='Landing' component={ Landing } options={ { headerShown: false } } />
+        <Stack.Screen name='Login' component={ Login } options={ { headerShown: false } } />
+        <Stack.Screen name='SignUp' component={ SignUp } options={ { headerShown: false } } />
+        <Stack.Screen name='Profile' component={ Profile } options={ { headerShown: false } } />
       </Stack.Navigator>
     </NavigationContainer>
   );
