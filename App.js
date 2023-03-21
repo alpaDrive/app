@@ -1,21 +1,24 @@
 import * as React from 'react'
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { StatusBar } from 'expo-status-bar'
 import Login from './src/screens/Login/Login';
 import Profile from './src/screens/Profile/Profile';
 import SignUp from './src/screens/SignUp/SignUp';
+import Landing from './src/screens/Landing/Landing'
 
 const Stack = createNativeStackNavigator()
 
 export default function App () {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator initialRouteName='Landing'>
         <Stack.Screen name='Landing' component={ Landing } options={ { headerShown: false } } />
         <Stack.Screen name='Login' component={ Login } options={ { headerShown: false } } />
         <Stack.Screen name='SignUp' component={ SignUp } options={ { headerShown: false } } />
         <Stack.Screen name='Profile' component={ Profile } options={ { headerShown: false } } />
       </Stack.Navigator>
+      <StatusBar style='light' backgroundColor='#00000D' />
     </NavigationContainer>
   );
 }

@@ -1,28 +1,33 @@
 import * as React from 'react'
 import * as SecureStore from 'expo-secure-store'
+import { Image, Dimensions } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 const Landing = ({ navigation }) => {
 
+    const goTo = (screen) => {
+        navigation.reset({
+            index: 0,
+            routes: [{ name: screen }],
+        });
+        navigation.navigate(screen)
+    }
     // when user opens app, run this code
     React.useEffect(() => {
-        async function check () {
+        async function check() {
             // get the value from secure store to see if it exists
             let result = await SecureStore.getItemAsync("alpaDrive");
-            console.log(result)
-            if (result) {
-                navigation.reset({
-                    index: 0,
-                    routes: [{ name: 'Profile' }],
-                });
-                navigation.navigate('Profile')
-            }
+            if (result) goTo('Profile')
+            else goTo('Login')
         }
-        check();
+        setTimeout(() => check(), 1500)
     }, [])
 
-    return <SafeAreaView style={ { flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#00000D' } } >
-        <Text>ALPADRIVE</Text>
+    return <SafeAreaView style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#00000D' }} >
+        <Image style={{
+            width: Dimensions.get('window').width / 1.8,
+            resizeMode: 'contain'
+        }} source={require('../../assets/img/logo.png')} />
     </SafeAreaView>
 }
 

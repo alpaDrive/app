@@ -11,9 +11,9 @@ export default StyleSheet.create({
         flexDirection:'row',
     },
     profile:{
-        flex:1,
+        flex:0.7,
         justifyContent:'center',
-        alignItems:'center',
+        alignItems:'flex-end',
     },
     icon:{
         height:120,
@@ -30,7 +30,7 @@ export default StyleSheet.create({
     details:{
         flex:1,
         justifyContent:'center',
-        alignItems:'flex-start',
+        alignItems:'flex-start'
     },
     buttons:{
         flex:1.5,
