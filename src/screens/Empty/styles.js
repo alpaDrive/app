@@ -7,20 +7,6 @@ export default StyleSheet.create({
         flexDirection:'column',
         backgroundColor:'#00000D',
     },
-    header:{
-        flex:1,
-        flexDirection:'row'
-    },
-    logo:{
-        flex:2,
-        justifyContent:'flex-end',
-        alignItems:'center',
-    },
-    user:{
-        flex:1,
-        justifyContent:'flex-end',
-        alignItems:'center'
-    },
     center:{
         flex:6,
         justifyContent:'center',
@@ -36,10 +22,12 @@ export default StyleSheet.create({
         width:400,
         justifyContent:'center',
         alignItems:'center',
-        backgroundColor:'#051128',
+        backgroundColor:'#081B42',
         borderTopLeftRadius: 45,
         borderTopRightRadius: 45,
-    }
+    },
+    
+  
 
 
 })
