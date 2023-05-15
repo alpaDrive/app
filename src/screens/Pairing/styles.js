@@ -22,11 +22,10 @@ export default StyleSheet.create({
         alignItems:'center'
     },
     camera:{
-        flex:6,
+        flex:10,
         justifyContent:'center',
-        alignItems:'center',
-        borderTopLeftRadius:'10',
-        borderTopRightRadius:'10'
+        alignItems:'center'
+        
     },
     bottom1:{
         flex:1,
@@ -34,14 +33,21 @@ export default StyleSheet.create({
         alignItems:'center'
     },
     text:{
-        height:100,
+        height:130,
         width:400,
         justifyContent:'center',
         alignItems:'center',
-        backgroundColor:'#051128',
-        borderTopLeftRadius: 45,
-        borderTopRightRadius: 45,
-    }
+        backgroundColor:'#07142F',
+        borderTopLeftRadius: 30,
+        borderTopRightRadius: 30,
+    },
+    headerp:{
+        height:130,
+        width:400,
+        backgroundColor:'#07142F',
+    },
+    
+    
 
 
 })
