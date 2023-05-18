@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, View, Text, TouchableOpacity, Image } from 'react-native';
+import { SafeAreaView, View, Text, TouchableOpacity, Image, TextInput, Alert } from 'react-native';
 import { Vibration } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Camera } from 'expo-camera';
+import Modal from 'react-native-modal';
 import styles from './styles';
 
 const Pairing = () => {
     const [ flash, setFlash ] = useState(Camera.Constants.FlashMode.off);
     const [ hasPermission, setHasPermission ] = useState(null);
     const [ isQRCodeDetected, setIsQRCodeDetected ] = useState(false);
+    const [ isModalVisible, setIsModalVisible ] = useState(false);
     const cameraRef = React.useRef(null);
 
     useEffect(() => {
@@ -31,6 +33,23 @@ const Pairing = () => {
         y: 0.2, // top position
         width: 0.6, // width of the area
         height: 0.6, // height of the area
+    };
+
+    const handleModalClose = () => {
+        setIsModalVisible(false);
+    };
+
+    const [ input1, setInput1 ] = useState('');
+    const [ input2, setInput2 ] = useState('');
+
+    const handleSend = () => {
+        if (!input1 || !input2) Alert.alert('Oops', "You can't leave a field blank!")
+        else {
+            const dataToSend = {
+                input1,
+                input2,
+            };
+        }
     };
 
     return (
@@ -66,6 +85,7 @@ const Pairing = () => {
                             if (!isQRCodeDetected) {
                                 setIsQRCodeDetected(true);
                                 Vibration.vibrate(); // Vibrate when QR code is detected
+                                setIsModalVisible(true); // Show the modal
                             }
                         } }
                     />
@@ -81,11 +101,44 @@ const Pairing = () => {
             ) }
             <View style={ styles.bottom1 }>
                 <View style={ styles.text }>
-                    <Text style={ { color: 'white', justifyContent: 'center', alignItems: 'center' } }>Scan the QR code on your device</Text>
+                    <Text style={ { color: 'white', justifyContent: 'center', alignItems: 'center' } }>
+                        Scan the QR code on your device
+                    </Text>
                 </View>
             </View>
+            <Modal isVisible={ isModalVisible } animationIn="fadeIn" animationOut="fadeOut">
+                <View style={ styles.modalContainer_pairing }>
+                    <View style={ styles.modalContent_Pairing }>
+                        <View style={ { flex: 2, justifyContent: 'flex-end', alignItems: 'center' } }>
+                            <TextInput
+                                style={ styles.input }
+                                value={ input1 }
+                                onChangeText={ (text) => setInput1(text) }
+                                placeholder="Enter your car name"
+                            />
+                        </View>
+                        <View style={ { flex: 2, justifyContent: 'center', alignItems: 'center' } }>
+                            <TextInput
+                                style={ styles.input }
+                                value={ input2 }
+                                onChangeText={ (text) => setInput2(text) }
+                                placeholder="Enter the brand name"
+                            />
+                        </View>
+                        <View style={ { flex: 1.5, flexDirection: 'row' } }>
+                            <TouchableOpacity style={ { flex: 1, justifyContent: 'center', alignItems: 'center' } } onPress={ handleModalClose }>
+                                <Text style={ { color: 'white' } }>Close</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={ { flex: 1, justifyContent: 'center', alignItems: 'center' } } onPress={ handleSend }>
+                                <Text style={ { color: 'white' } }>Submit</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </View>
+            </Modal>
         </SafeAreaView>
     );
+
 };
 
-export default Pairing;
+export default Pairing

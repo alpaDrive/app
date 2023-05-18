@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Pressable } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
 import styles from './styles'
@@ -9,8 +9,15 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 
 
-const Home = () => {
+const Home = ({navigatioin}) => {
+
     const [ location, setLocation ] = useState(null);
+    const [ brandName, setBrandName ] = useState('');
+    const [ vehicleRpm, setVehicleRpm ] = useState('');
+    const [ model, setModel ] = useState('');
+    const [ gearPosition, setGearPositon ] = useState('')
+    const [ speed, setSpeed ] = useState('');
+    const [ fuel, setFuel ] = useState('');
 
     useEffect(() => {
         (async () => {
@@ -26,6 +33,24 @@ const Home = () => {
                 maximumAge: 1000,
             });
             setLocation(coords);
+
+            //responses
+            try {
+                const response = await fetch('your-server-endpoint');
+                if (!response.ok) {
+                    throw new Error('Error fetching data from server');
+                }
+                const data = await response.json();
+                setBrandName(data.brandName);
+                setVehicleRpm(data.rpm)
+                setModel(data.model);
+                setGearPositon(data.gear)
+                setSpeed(data.speed);
+                setFuel(data.fuel);
+            } catch (error) {
+                console.error('Error fetching data from server:', error);
+            }
+
         })();
     }, []);
 
@@ -53,24 +78,24 @@ const Home = () => {
                 <View style={ styles.bottom_container }>
                     <View style={ styles.brand_name }>
                         <View style={ styles.brand }>
-                            <Text style={ { fontSize: 25, color: 'white' } }>Octavia</Text>
-                            <Text style={ { color: 'white' } }>3000 r/min</Text>
+                            <Text style={ { fontSize: 25, color: 'white' } }>{ brandName }</Text>
+                            <Text style={ { color: 'white' } }>{vehicleRpm} r/min</Text>
                         </View>
                         <View style={ styles.model }>
-                            <Text style={ { fontSize: 17, color: 'gray' } }>Skoda</Text>
-                            <Text style={ { color: 'gray' } }>3rd Gear</Text>
+                            <Text style={ { fontSize: 17, color: 'gray' } }>{model}</Text>
+                            <Text style={ { color: 'gray' } }>{gearPosition}rd Gear</Text>
                         </View>
                     </View>
                     <View style={ styles.kilometers }>
-                        <Text style={ { color: 'white', fontSize: 20 } }>45 km/hr</Text>
+                        <Text style={ { color: 'white', fontSize: 20 } }>{speed} km/hr</Text>
                         <Text style={ { color: 'white' } }><FontAwesome5 name="gas-pump" size={ 24 } color="white" /> 70%</Text>
                     </View>
-                    <View style={ styles.know_more }>
+                    <Pressable  onPress={ () => navigation.navigate('Connet') } style={ styles.know_more }>
                         <View style={ styles.know_box }>
                             <Text style={ { fontSize: 15, fontWeight: 200 } }>Know more</Text>
                             <Text><MaterialIcons name="keyboard-arrow-right" size={ 24 } color="black" /></Text>
                         </View>
-                    </View>
+                    </Pressable>
                     <View style={ { flex: .2 } }></View>
                 </View>
             </View>

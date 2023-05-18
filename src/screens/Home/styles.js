@@ -14,20 +14,22 @@ export default StyleSheet.create({
         width:400,
         justifyContent:'space-around',
         backgroundColor:'#051128',
-        borderTopLeftRadius:40,
-        borderTopRightRadius:40
+        borderTopLeftRadius:25,
+        borderTopRightRadius:25
     },
     container:{
         flex:1
     },
     map:{
-        flex:1
+        flex:1,
+        marginBottom:-13,
+        marginTop:0
     },
     brand_name:{
         flex:1.2,
         backgroundColor:'#051128',
-        borderTopLeftRadius:40,
-        borderTopRightRadius:40
+        borderTopLeftRadius:25,
+        borderTopRightRadius:25
     },
     kilometers:{
         flex:.5,
@@ -52,8 +54,8 @@ export default StyleSheet.create({
         flexDirection:'row',
         justifyContent:'space-around',
         alignItems:'flex-end',
-        borderTopLeftRadius:40,
-        borderTopRightRadius:40
+        borderTopLeftRadius:25,
+        borderTopRightRadius:25
     },
     model:{
         flex:1,
