@@ -24,7 +24,8 @@ const Login = ({ navigation }) => {
             })
             const body = await response.json()
             if (response.ok) {
-                await SecureStore.setItemAsync("alpaDrive", JSON.stringify(body))
+                await SecureStore.setItemAsync("alpaDrive-user", JSON.stringify(body))
+                await SecureStore.setItemAsync("alpaDrive-vehicles", JSON.stringify(body.vehicles))
                 let screen = 'Home'
                 if(body.vehicles.length < 0) screen = 'Pairing' 
                 navigation.reset({

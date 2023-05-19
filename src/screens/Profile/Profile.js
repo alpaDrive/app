@@ -74,7 +74,12 @@ const Profile = ({ navigation }) => {
         </View>
         <View style={styles.signout}>
             <Pressable onPress={async () => {
-                await SecureStore.deleteItemAsync("alpaDrive");
+                await SecureStore.deleteItemAsync("alpaDrive-user");
+                await SecureStore.deleteItemAsync("alpaDrive-vehicles");
+                navigation.reset({
+                    index: 0,
+                    routes: [{ name: 'Login' }],
+                });
                 navigation.navigate('Login');
             }}>
                 <Text style={{ fontSize: 15, color: 'white' }}>SIGN OUT</Text>

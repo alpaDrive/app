@@ -21,14 +21,13 @@ export default function App () {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName='Landing'>
-        {/* <Stack.Screen name='Landing' component={ Landing } options={ { headerShown: false } } />
+        <Stack.Screen name='Landing' component={ Landing } options={ { headerShown: false } } />
         <Stack.Screen name='Login' component={ Login } options={ { headerShown: false } } />
         <Stack.Screen name='SignUp' component={ SignUp } options={ { headerShown: false } } />
         <Stack.Screen name='Profile' component={ Profile } options={ { headerShown: false } } />
-        
         <Stack.Screen name='Ques' component={Ques} options={{ headerShown: false }} />
         <Stack.Screen name='Empty' component={Empty} options={{ headerShown: false }} />
-        <Stack.Screen name='Pairing' component={Pairing} options={{ headerShown: false }} /> */}
+        <Stack.Screen name='Pairing' component={Pairing} options={{ headerShown: false }} />
         <Stack.Screen name='Home' component={Home} options={{ headerShown: false }} />
         <Stack.Screen name='Connect' component={Connect} options={{ headerShown: false }} />
         <Stack.Screen name='Daily' component={Daily} options={{ headerShown: false }} />

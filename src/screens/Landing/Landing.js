@@ -16,8 +16,11 @@ const Landing = ({ navigation }) => {
     React.useEffect(() => {
         async function check() {
             // get the value from secure store to see if it exists
-            let result = await SecureStore.getItemAsync("alpaDrive");
-            if (result) goTo('Profile')
+            let result = await SecureStore.getItemAsync("alpaDrive-user");
+            if (result) {
+                if(JSON.parse(await SecureStore.getItemAsync("alpaDrive-vehicles")).length > 0) goTo('Home')
+                else goTo('Pairing')
+            }
             else goTo('Login')
         }
         setTimeout(() => check(), 1500)
