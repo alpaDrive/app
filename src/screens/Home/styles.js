@@ -6,13 +6,11 @@ export default StyleSheet.create({
         flex: 1,
     },
     map_container: {
-        flex: 1,
-        
+        flex: 1,   
     },
     bottom_container: {
         height:250,
         width:400,
-        justifyContent:'space-around',
         backgroundColor:'#051128',
         borderTopLeftRadius:25,
         borderTopRightRadius:25
@@ -28,6 +26,7 @@ export default StyleSheet.create({
     brand_name:{
         flex:1.2,
         backgroundColor:'#051128',
+        justifyContent:'space-between',
         borderTopLeftRadius:25,
         borderTopRightRadius:25
     },
@@ -41,7 +40,8 @@ export default StyleSheet.create({
     know_more:{
         flex:1,
         justifyContent:'center',
-        alignItems:"center"
+        alignItems:"center",
+        backgroundColor:'#051128'
     },
     navbar:{
         flex:1,
@@ -64,18 +64,25 @@ export default StyleSheet.create({
     },
     know_box:{
         height:60,
-        width:350,
+        width:360,
         borderRadius:15,
-        justifyContent:'space-around',
-        alignItems:'center',
-        backgroundColor:'#ffff',
+        backgroundColor:'#D9D9D9',
         flexDirection:'row'
     },
-    navbar_box:{
-        height:60,
-        width:350,
-        borderRadius:15,
-        flexDirection:'row' 
-    },
+    // profile:{
+    //     flex:0.1,
+    //     justifyContent:'flex-end',
+    //     alignItems:'flex-end',
+    //     backgroundColor:'transparent' 
+    // },
+    // profile_container:{
+    //     height:50,
+    //     width:50,
+    //     marginRight:10,
+    //     borderRadius:50,
+    //     backgroundColor:'#051128',
+    //     justifyContent:'center',
+    //     alignItems:'center'
+    // }
     
 })

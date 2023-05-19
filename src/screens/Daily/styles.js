@@ -50,6 +50,10 @@ export default StyleSheet.create({
   list_style: {
     flex: 2,
     justifyContent: 'center',
+    alignItems: 'flex-start'
+  },
+  list_value_style:{
+    justifyContent: 'center',
     alignItems: 'center'
   },
   left_right_space: {
