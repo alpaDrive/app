@@ -131,7 +131,7 @@ const Daily = ({ navigation }) => {
                         <View style={ styles.list_style }>
                             <Text style={ { color: 'white', fontSize: 15 } }>{ detail.label }</Text>
                         </View>
-                        <View style={ styles.list_style }>
+                        <View style={ styles.list_value_style }>
                             <Text style={ { color: 'white', fontSize: 15 } }>{ detail.value }</Text>
                         </View>
                         <View style={ { flex: 0.5 } }></View>
