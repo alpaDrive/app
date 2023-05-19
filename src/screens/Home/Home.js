@@ -7,9 +7,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 
-
-
-const Home = ({navigatioin}) => {
+const Home = ({ navigation }) => {
 
     const [ location, setLocation ] = useState(null);
     const [ brandName, setBrandName ] = useState('');
@@ -55,7 +53,7 @@ const Home = ({navigatioin}) => {
     }, []);
 
     return (
-        <SafeAreaView style={ styles.main_container }>
+        <View style={ styles.main_container }>
             <View style={ styles.map_container }>
                 <View style={ styles.container }>
                     { location && (
@@ -78,11 +76,11 @@ const Home = ({navigatioin}) => {
                 <View style={ styles.bottom_container }>
                     <View style={ styles.brand_name }>
                         <View style={ styles.brand }>
-                            <Text style={ { fontSize: 25, color: 'white' } }>{ brandName }</Text>
-                            <Text style={ { color: 'white' } }>{vehicleRpm} r/min</Text>
+                            <Text style={ { fontSize: 25, color: 'white' } }>Octavia</Text>
+                            <Text style={ { color: 'white' } }>4500 r/min</Text>
                         </View>
                         <View style={ styles.model }>
-                            <Text style={ { fontSize: 17, color: 'gray' } }>{model}</Text>
+                            <Text style={ { fontSize: 17, color: 'gray' } }>skoda</Text>
                             <Text style={ { color: 'gray' } }>{gearPosition}rd Gear</Text>
                         </View>
                     </View>
@@ -90,7 +88,7 @@ const Home = ({navigatioin}) => {
                         <Text style={ { color: 'white', fontSize: 20 } }>{speed} km/hr</Text>
                         <Text style={ { color: 'white' } }><FontAwesome5 name="gas-pump" size={ 24 } color="white" /> 70%</Text>
                     </View>
-                    <Pressable  onPress={ () => navigation.navigate('Connet') } style={ styles.know_more }>
+                    <Pressable  onPress={ () => navigation.navigate('Connect') } style={ styles.know_more }>
                         <View style={ styles.know_box }>
                             <Text style={ { fontSize: 15, fontWeight: 200 } }>Know more</Text>
                             <Text><MaterialIcons name="keyboard-arrow-right" size={ 24 } color="black" /></Text>
@@ -100,7 +98,7 @@ const Home = ({navigatioin}) => {
                 </View>
             </View>
 
-        </SafeAreaView>
+        </View>
     );
 };
 

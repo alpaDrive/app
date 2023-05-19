@@ -11,7 +11,6 @@ import Connect from './src/screens/Connect/Connect';
 import Home from './src/screens/Home/Home'
 import Empty from './src/screens/Empty/Empty';
 import Pairing from './src/screens/Pairing/Pairing';
-import Login from './src/screens/Login/Login';
 import Daily from './src/screens/Daily/Daily';
 import Periodic from './src/screens/Periodic/Periodic';
 import Overall from './src/screens/Overall/Overall'
