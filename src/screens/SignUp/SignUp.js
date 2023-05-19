@@ -1,0 +1,112 @@
+import * as React from 'react'
+import * as SecureStore from 'expo-secure-store'
+import { View, Text, TextInput, Pressable, Alert, Keyboard, Image } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context';
+import styles from './styles';
+
+const SignUp = ({ navigation }) => {
+
+    const [name, setname] = React.useState('')
+    const [username, setusername] = React.useState('')
+    const [email, setemail] = React.useState('')
+    const [password, setPassword] = React.useState('')
+    const [keyboardActive, setKeyboard] = React.useState(false)
+
+    const submit = async () => {
+        if (!name || !username || !email || !password) Alert.alert('Oops', "You can't leave a field blank!")
+        else {
+            const response = await fetch('https://alpadrive.selseus.com/signup', {
+                method: 'POST',
+                headers: new Headers(),
+                body: JSON.stringify({
+                    "name": name,
+                    "username": username,
+                    "email": email,
+                    "password": password,
+                })
+            })
+            const body = await response.json()
+            if (response.ok) {
+                await SecureStore.setItemAsync("alpaDrive", JSON.stringify({
+                    uid: body.uid,
+                    name: name,
+                    username: username,
+                    email: email,
+                    password: password,
+                    vehicles: []
+                }))
+                navigation.reset({
+                    index: 0,
+                    routes: [{ name: 'Profile' }],
+                });
+                navigation.navigate('Profile')
+            } else {
+                Alert.alert(JSON.stringify(body.error))
+            }
+        }
+    }
+
+    React.useEffect(() => {
+        const show = Keyboard.addListener('keyboardDidShow', () => setKeyboard(true))
+        const hide = Keyboard.addListener('keyboardDidHide', () => setKeyboard(false))
+
+        return () => {
+            show.remove()
+            hide.remove()
+        }
+    }, [])
+
+    return (
+        <SafeAreaView style={styles.container}>
+            <View style={[styles.titleview, { justifyContent: keyboardActive ? 'flex-start' : 'flex-end' }]}>
+                {!keyboardActive ? <Image style={styles.title} source={require('../../assets/img/logo.png')} /> : null}
+            </View>
+            <View style={styles.welcomeview}>
+                {!keyboardActive ? <Text style={styles.welcome}>Let's get started</Text> : null}
+                {!keyboardActive ? <Text style={styles.details}>Enter your details</Text> : null}
+            </View>
+            <View style={[styles.inputview, { justifyContent: keyboardActive ? 'flex-end' : 'center' }]}>
+                <TextInput
+                    placeholder='Enter your name '
+                    placeholderTextColor='grey'
+                    value={name}
+                    onChangeText={text => setname(text)}
+                    style={styles.textinput}
+                />
+                <TextInput
+                    placeholder='Enter your username '
+                    placeholderTextColor='grey'
+                    value={username}
+                    onChangeText={text => setusername(text)}
+                    style={styles.textinput}
+                />
+
+                <TextInput
+                    placeholder='Enter your email'
+                    placeholderTextColor='grey'
+                    value={email}
+                    onChangeText={text => setemail(text)}
+                    style={styles.textinput}
+                />
+                <TextInput
+                    placeholder='Enter your password'
+                    placeholderTextColor='grey'
+                    value={password}
+                    onChangeText={text => setPassword(text)}
+                    style={styles.textinput}
+                />
+                <Pressable onPress={submit} style={styles.button}>
+                    <Text style={styles.buttontext}>Continue</Text>
+                </Pressable>
+            </View>
+            {!keyboardActive ? <View style={styles.subtextview}>
+                <Text style={styles.subtexted}>Already have an account?</Text><Pressable onPress={() => navigation.navigate('Login')}><Text style={styles.sign}> Log in</Text></Pressable>
+            </View> : null}
+            {!keyboardActive ? <View style={styles.downtextview}>
+                <Text style={styles.downtexted}>By continuing, you agree to our Terms Of Service & Privacy Policy</Text>
+            </View> : null}
+        </SafeAreaView>
+    )
+}
+
+export default SignUp
