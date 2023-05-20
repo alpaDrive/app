@@ -13,31 +13,6 @@ export default StyleSheet.create({
     backgroundColor: '#07142F',
     flexDirection: 'row'
   },
-  //pop up css..
-  modalContainer: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.3)',
-  },
-  modalContent: {
-    backgroundColor: '#07142F',
-    width: '100%',
-    height: 200,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-  },
-  modalButton: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 5,
-
-  },
-  modalButtonText: {
-    color: 'white',
-    fontSize: 16,
-  },
   //date box
   date_box: {
     height: 200,

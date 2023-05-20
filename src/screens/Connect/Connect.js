@@ -80,7 +80,7 @@ const Connect = ({ navigation, route }) => {
     };
 
     wsRef.current.onclose = () => {
-      if(uiRef.current) clearTimeout(uiRef.current)
+      if (uiRef.current) clearTimeout(uiRef.current)
       setConnected(false)
       scheduleReconnect();
     };
@@ -217,7 +217,7 @@ const Connect = ({ navigation, route }) => {
           )}
         </View>
       </View>
-      <Pressable onPress={() => navigation.navigate('Daily')} style={styles.statview}>
+      <Pressable onPress={() => navigation.navigate('Stats', { vid: vid })} style={styles.statview}>
         <View style={styles.statflex}>
           <View style={styles.stattext}>
             <Text style={styles.usage}>Usage stats</Text>

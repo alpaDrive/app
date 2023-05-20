@@ -11,9 +11,7 @@ import Connect from './src/screens/Connect/Connect';
 import Home from './src/screens/Home/Home'
 import Empty from './src/screens/Empty/Empty';
 import Pairing from './src/screens/Pairing/Pairing';
-import Daily from './src/screens/Daily/Daily';
-import Periodic from './src/screens/Periodic/Periodic';
-import Overall from './src/screens/Overall/Overall'
+import Stats from './src/screens/Stats/Stats';
 
 const Stack = createNativeStackNavigator()
 
@@ -30,9 +28,7 @@ export default function App () {
         <Stack.Screen name='Pairing' component={Pairing} options={{ headerShown: false }} />
         <Stack.Screen name='Home' component={Home} options={{ headerShown: false }} />
         <Stack.Screen name='Connect' component={Connect} options={{ headerShown: false }} />
-        <Stack.Screen name='Daily' component={Daily} options={{ headerShown: false }} />
-        <Stack.Screen name='Periodic' component={Periodic} options={{ headerShown: false }} />
-        <Stack.Screen name='Overall' component={Overall} options={{ headerShown: false }} />
+        <Stack.Screen name='Stats' component={Stats} options={{ headerShown: false }} />
       </Stack.Navigator>
       <StatusBar style='light' backgroundColor='#00000D' />
     </NavigationContainer>
