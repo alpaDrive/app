@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native"
+import { StyleSheet,Dimensions } from "react-native"
 
 
 export default StyleSheet.create({
@@ -34,7 +34,7 @@ export default StyleSheet.create({
     },
     text: {
         height: 130,
-        width: 400,
+        width: Dimensions.get('window').width,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#07142F',
@@ -43,7 +43,7 @@ export default StyleSheet.create({
     },
     headerp: {
         height: 130,
-        width: 400,
+        width: Dimensions.get('window').width,
         backgroundColor: '#07142F',
     },
     modelContainer_pairing: {

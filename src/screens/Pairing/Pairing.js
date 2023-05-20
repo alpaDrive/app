@@ -11,6 +11,9 @@ const Pairing = () => {
     const [ hasPermission, setHasPermission ] = useState(null);
     const [ isQRCodeDetected, setIsQRCodeDetected ] = useState(false);
     const [ isModalVisible, setIsModalVisible ] = useState(false);
+    const [ qrCodeData, setQRCodeData ] = useState(null);
+    const [ input1, setInput1 ] = useState('');
+    const [ input2, setInput2 ] = useState('');
     const cameraRef = React.useRef(null);
 
     useEffect(() => {
@@ -37,19 +40,43 @@ const Pairing = () => {
 
     const handleModalClose = () => {
         setIsModalVisible(false);
+        setIsQRCodeDetected(false);
+        setQRCodeData(null);
     };
 
-    const [ input1, setInput1 ] = useState('');
-    const [ input2, setInput2 ] = useState('');
-
     const handleSend = () => {
-        if (!input1 || !input2) Alert.alert('Oops', "You can't leave a field blank!")
-        else {
+        if (!input1 || !input2) {
+            Alert.alert('Oops', "You can't leave a field blank!");
+        } else {
             const dataToSend = {
                 input1,
                 input2,
             };
+            // Send the data
         }
+    };
+
+    useEffect(() => {
+        if (isQRCodeDetected && qrCodeData) {
+            try {
+                const parsedData = JSON.parse(qrCodeData);
+
+                // Check if the parsed data contains a valid vehicle ID (vid) and initial value
+                if (parsedData && parsedData.vid && parsedData.initial) {
+                    setIsModalVisible(true); // Show the modal
+                    Vibration.vibrate(); // Vibrate when QR code is detected
+                } else {
+                    Alert.alert('Error', 'Invalid QR code');
+                }
+            } catch (error) {
+                Alert.alert('Error', 'Invalid QR code');
+            }
+        }
+    }, [ isQRCodeDetected, qrCodeData ]);
+
+    const handleBarCodeScanned = ({ data }) => {
+        setIsQRCodeDetected(true);
+        setQRCodeData(data);
     };
 
     return (
@@ -81,13 +108,7 @@ const Pairing = () => {
                         ref={ cameraRef }
                         ratio="16:9" // set the desired aspect ratio here
                         rectOfInterest={ focusArea }
-                        onBarCodeScanned={ () => {
-                            if (!isQRCodeDetected) {
-                                setIsQRCodeDetected(true);
-                                Vibration.vibrate(); // Vibrate when QR code is detected
-                                setIsModalVisible(true); // Show the modal
-                            }
-                        } }
+                        onBarCodeScanned={ isQRCodeDetected ? undefined : handleBarCodeScanned }
                     />
                     { isQRCodeDetected && (
                         <View style={ styles.vibrationOverlay }>
@@ -126,10 +147,16 @@ const Pairing = () => {
                             />
                         </View>
                         <View style={ { flex: 1.5, flexDirection: 'row' } }>
-                            <TouchableOpacity style={ { flex: 1, justifyContent: 'center', alignItems: 'center' } } onPress={ handleModalClose }>
+                            <TouchableOpacity
+                                style={ { flex: 1, justifyContent: 'center', alignItems: 'center' } }
+                                onPress={ handleModalClose }
+                            >
                                 <Text style={ { color: 'white' } }>Close</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={ { flex: 1, justifyContent: 'center', alignItems: 'center' } } onPress={ handleSend }>
+                            <TouchableOpacity
+                                style={ { flex: 1, justifyContent: 'center', alignItems: 'center' } }
+                                onPress={ handleSend }
+                            >
                                 <Text style={ { color: 'white' } }>Submit</Text>
                             </TouchableOpacity>
                         </View>
@@ -138,7 +165,7 @@ const Pairing = () => {
             </Modal>
         </SafeAreaView>
     );
-
 };
 
-export default Pairing
+export default Pairing;
+
