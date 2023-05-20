@@ -22,7 +22,12 @@
         "foregroundImage": "./src/assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.muhammedijas.alpaDrive"
+      "package": "com.muhammedijas.alpaDrive",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyAjf2ELyg9Gum-34VW4806IHTW8XNUKqrE"
+        }
+      }
     },
     "web": {
       "favicon": "./src/assets/favicon.png"
