@@ -133,7 +133,7 @@ const Connect = ({ navigation, route }) => {
           <View style={styles.speedflex}>
             <View style={styles.speedometer}>
               <ProgressCircle
-                percent={parseInt((speed/20)*100)}
+                percent={parseInt((speed/200)*100)}
                 radius={90}
                 borderWidth={9}
                 color="white"
