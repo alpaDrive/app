@@ -76,46 +76,6 @@ const Pairing = ({ navigation }) => {
         }
     };
 
-    const handleBarCodeScanned = async ({ data }) => {
-        try {
-            const parsedData = JSON.parse(data);
-            if (parsedData.hasOwnProperty("vid") && parsedData.hasOwnProperty("initial")) {
-                Vibration.vibrate();
-                for (const each of vehicles)
-                    if (parsedData.vid === each._id.$oid)
-                        Alert.alert(
-                            'We got you!',
-                            'This vehicle has already been paired to your account. If you itend to pair this vehicle to another account, then just sign in to that account on the app, and show the QR code from your acccount',
-                            [
-                                {
-                                    text: 'Pair Another',
-                                    style: 'cancel'
-                                },
-                                {
-                                    text: 'Go Home',
-                                    onPress: () => navigation.navigate('Home'),
-                                    style: 'default'
-                                }
-                            ]
-                        )
-                const response = await fetch(`https://${configs.SERVER_URL}/pair/${parsedData.vid}/${uid}?initial=${parsedData.initial}`)
-                const body = await response.json()
-                if (response.ok) {
-                    if (parsedData.initial) { setIsModalVisible(true); vid = parsedData.vid; }
-                    else Alert.alert(
-                        'Welcome aboard!',
-                        'Your new vehicle has been paired and is ready to go. Open the app to see what you can do with alpaDrive.',
-                        [{
-                            text: 'Show Me',
-                            onPress: () => navigation.navigate('Home'),
-                            style: 'default'
-                        }]
-                    )
-                } else Alert.alert('Uh, oh!', JSON.stringify(body.error))
-            }
-        } catch { }
-    };
-
     return (
         <SafeAreaView style={styles.rootp}>
             <View style={styles.headerp}>
@@ -143,9 +103,52 @@ const Pairing = ({ navigation }) => {
                         type={Camera.Constants.Type.back}
                         flashMode={flash}
                         ref={cameraRef}
-                        ratio="16:9" // set the desired aspect ratio here
+                        ratio="16:9"
                         rectOfInterest={focusArea}
-                        onBarCodeScanned={isQRCodeDetected ? undefined : handleBarCodeScanned}
+                        onBarCodeScanned={async ({ data }) => {
+                            try {
+                                const parsedData = JSON.parse(data);
+                                if (parsedData.hasOwnProperty("vid") && parsedData.hasOwnProperty("initial")) {
+                                    Vibration.vibrate(10);
+                                    setIsQRCodeDetected(true)
+                                    for (const each of vehicles)
+                                        if (parsedData.vid === each._id.$oid)
+                                            Alert.alert(
+                                                'We got you!',
+                                                'This vehicle has already been paired to your account. If you itend to pair this vehicle to another account, then just sign in to that account on the app, and show the QR code from your acccount',
+                                                [
+                                                    {
+                                                        text: 'Pair Another',
+                                                        style: 'cancel'
+                                                    },
+                                                    {
+                                                        text: 'Go Home',
+                                                        onPress: () => navigation.navigate('Home'),
+                                                        style: 'default'
+                                                    }
+                                                ]
+                                            )
+                                        console.log(`http://${configs.SERVER_URL}/pair/${parsedData.vid}/${uid}?initial=${parsedData.initial}`)
+                                    const response = await fetch(`https://${configs.SERVER_URL}/pair/${parsedData.vid}/${uid}?initial=${parsedData.initial}`)
+                                    const body = await response.json()
+                                    if (response.ok || response.status === 500) {
+                                        if (parsedData.initial) { setIsModalVisible(true); vid = parsedData.vid; }
+                                        else Alert.alert(
+                                            'Welcome aboard!',
+                                            'Your new vehicle has been paired and is ready to go. Open the app to see what you can do with alpaDrive.',
+                                            [{
+                                                text: 'Show Me',
+                                                onPress: () => navigation.navigate('Home'),
+                                                style: 'default'
+                                            }]
+                                        )
+                                    } else Alert.alert('Uh, oh!', JSON.stringify(body.error))
+                                }
+                            } catch (error) {
+                                console.log(error)
+                                setIsQRCodeDetected(false)
+                            }
+                        }}
                     />
                     {isQRCodeDetected && (
                         <View style={styles.vibrationOverlay}>
@@ -171,7 +174,7 @@ const Pairing = ({ navigation }) => {
                             <TextInput
                                 style={styles.input}
                                 value={input1}
-                                onChangeText={(text) => setInput1(text)}
+                                onChangeText={text => setInput1(text)}
                                 placeholder="Enter your car name"
                             />
                         </View>
@@ -179,7 +182,7 @@ const Pairing = ({ navigation }) => {
                             <TextInput
                                 style={styles.input}
                                 value={input2}
-                                onChangeText={(text) => setInput2(text)}
+                                onChangeText={text => setInput2(text)}
                                 placeholder="Enter the brand name"
                             />
                         </View>
