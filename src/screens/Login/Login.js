@@ -10,6 +10,7 @@ const Login = ({ navigation }) => {
     const [id, setid] = React.useState('')
     const [password, setPassword] = React.useState('')
     const [keyboardActive, setKeyboard] = React.useState(false)
+    const field = React.useRef(null)
 
     const submit = async () => {
         if (!id || !password) Alert.alert('Oops', "You can't leave a field blank!")
@@ -67,13 +68,16 @@ const Login = ({ navigation }) => {
                     placeholderTextColor='grey'
                     value={id}
                     onChangeText={text => setid(text)}
+                    onSubmitEditing={() => field.current.focus()}
                     style={styles.textinput}
                 />
                 <TextInput
+                    ref={field}
                     placeholder='Enter password'
                     placeholderTextColor='grey'
                     value={password}
                     onChangeText={text => setPassword(text)}
+                    onSubmitEditing={submit}
                     style={styles.textinput}
                 />
                 <Pressable onPress={submit} style={styles.button}>
