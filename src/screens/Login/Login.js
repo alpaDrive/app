@@ -2,6 +2,7 @@ import * as React from 'react'
 import * as SecureStore from 'expo-secure-store'
 import { View, Text, TextInput, Pressable, Alert, Keyboard, Image } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context';
+import configs from '../../assets/configs';
 import styles from './styles';
 
 const Login = ({ navigation }) => {
@@ -13,7 +14,7 @@ const Login = ({ navigation }) => {
     const submit = async () => {
         if (!id || !password) Alert.alert('Oops', "You can't leave a field blank!")
         else {
-            const response = await fetch('https://alpadrive.selseus.com/login', {
+            const response = await fetch(`https://${configs.SERVER_URL}/login`, {
                 method: 'POST',
                 headers: new Headers(),
                 body: JSON.stringify({
