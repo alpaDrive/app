@@ -10,8 +10,7 @@ const Profile = ({ navigation }) => {
 
     React.useEffect(() => {
         async function check() {
-            // get the value from secure store to see if it exists
-            let result = await SecureStore.getItemAsync("alpaDrive");
+            let result = await SecureStore.getItemAsync("alpaDrive-user");
             if (result) setCreds(JSON.parse(result))
         }
         check()

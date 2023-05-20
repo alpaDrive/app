@@ -17,7 +17,7 @@ const Landing = ({ navigation }) => {
         async function check() {
             // get the value from secure store to see if it exists
             let result = await SecureStore.getItemAsync("alpaDrive-user");
-            if (result) {
+            if (result != null) {
                 if(JSON.parse(await SecureStore.getItemAsync("alpaDrive-vehicles")).length > 0) goTo('Home')
                 else goTo('Pairing')
             }
