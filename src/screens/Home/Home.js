@@ -37,8 +37,8 @@ const Home = ({ navigation }) => {
             });
             setLocation(coords);
 
+            const creds = JSON.parse(await SecureStore.getItemAsync("alpaDrive-user"))
             try {
-                const creds = JSON.parse(await SecureStore.getItemAsync("alpaDrive-user"))
                 const response = await fetch(`https://${configs.SERVER_URL}/vehicle/refresh`, {
                     method: 'POST',
                     headers: new Headers(),
@@ -54,10 +54,14 @@ const Home = ({ navigation }) => {
                     setDetails({ make: data.vehicles[0].company, model: data.vehicles[0].model })
                     setCreds({ vid: data.vehicles[0]._id.$oid, uid: creds.uid.$oid })
                     joinRoom(creds.uid.$oid, data.vehicles[0]._id.$oid)
+                    await SecureStore.setItemAsync("alpaDrive-vehicles", JSON.stringify(data.vehicles))
                 }
-            } catch (error) {
-                console.log(error)
+            } catch {
+                const vehicle = JSON.parse(await SecureStore.getItemAsync("alpaDrive-vehicles"))[0]
                 Alert.alert('Warning', 'Failed to get updated list of vehicles. You maybe viewing an older vehicle.')
+                joinRoom(creds.uid.$oid, vehicle._id.$oid)
+                setDetails({ make: vehicle.company, model: vehicle.model })
+                setCreds({ vid: vehicle._id.$oid, uid: creds.uid.$oid })
             }
 
         })();
