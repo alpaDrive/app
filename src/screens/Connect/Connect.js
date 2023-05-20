@@ -10,6 +10,8 @@ import configs from '../../assets/configs'
 import styles from './styles';
 
 const Connect = ({ navigation, route }) => {
+
+  const { uid, vid } = route.params;
   const [fuelPercentage, setFuelPercentage] = useState(0);
   const [gear, setGear] = useState('N');
   const [speed, setSpeed] = useState(0);
@@ -19,9 +21,10 @@ const Connect = ({ navigation, route }) => {
 
   const wsRef = React.useRef(null);
   const reconnectInterval = React.useRef(null);
+  const uiRef = React.useRef(null)
 
   const [isFlipped, setIsFlipped] = useState(false);
-  const [text1, setText1] = useState('43,500');
+  const [text1, setText1] = useState('0');
   const [text2, setText2] = useState('Total');
   const [isLeftArrowVisible, setIsLeftArrowVisible] = useState(true);
   const [isRightArrowVisible, setIsRightArrowVisible] = useState(true);
@@ -54,11 +57,11 @@ const Connect = ({ navigation, route }) => {
   };
 
   const joinRoom = () => {
-    wsRef.current = new WebSocket(`wss://${configs.SERVER_URL}/join/user/${route.params.uid}/${route.params.vid}`);
+    wsRef.current = new WebSocket(`wss://${configs.SERVER_URL}/join/user/${uid}/${vid}`);
 
     wsRef.current.onopen = () => {
       clearTimeout(reconnectInterval.current);
-      setConnected(true)
+      uiRef.current = setTimeout(() => setConnected(true), 1000)
     };
 
     wsRef.current.onmessage = (message) => {
@@ -67,7 +70,7 @@ const Connect = ({ navigation, route }) => {
         setSpeed(data.speed)
         setRPM(data.rpm)
         setGear(`${data.gear > 0 ? data.gear : 'N'}`)
-        setcoolTemp(parseInt((data.temp/120)*100))
+        setcoolTemp(parseInt((data.temp / 120) * 100))
         setText1(data.odo)
       }
     };
@@ -77,6 +80,7 @@ const Connect = ({ navigation, route }) => {
     };
 
     wsRef.current.onclose = () => {
+      if(uiRef.current) clearTimeout(uiRef.current)
       setConnected(false)
       scheduleReconnect();
     };
@@ -91,7 +95,7 @@ const Connect = ({ navigation, route }) => {
   };
 
   const scheduleReconnect = () => {
-    const delay = 1000; // Delay in milliseconds before attempting to reconnect
+    const delay = 200; // Delay in milliseconds before attempting to reconnect
     clearTimeout(reconnectInterval.current);
     reconnectInterval.current = setTimeout(() => {
       joinRoom();
@@ -99,7 +103,7 @@ const Connect = ({ navigation, route }) => {
   };
 
   React.useEffect(() => {
-    joinRoom()
+    joinRoom(uid, vid)
     return () => { leaveRoom() }
   }, [])
 
@@ -133,7 +137,7 @@ const Connect = ({ navigation, route }) => {
           <View style={styles.speedflex}>
             <View style={styles.speedometer}>
               <ProgressCircle
-                percent={parseInt((speed/200)*100)}
+                percent={parseInt((speed / 200) * 100)}
                 radius={90}
                 borderWidth={9}
                 color="white"
@@ -151,7 +155,7 @@ const Connect = ({ navigation, route }) => {
           <View style={styles.rpmflex}>
             <View style={styles.rpmtemp}>
               <ProgressCircle
-                percent={parseInt((rpm/8000)*100)}
+                percent={parseInt((rpm / 8000) * 100)}
                 radius={50}
                 borderWidth={5}
                 color="#1559DC"

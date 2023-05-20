@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Pressable, Alert } from 'react-native';
-import MapView, { Marker } from 'react-native-maps';
+import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import * as Location from 'expo-location';
@@ -20,7 +20,8 @@ const Home = ({ navigation }) => {
     const [gear, setGear] = useState('Gear N')
     const wsRef = React.useRef(null);
     const reconnectInterval = React.useRef(null);
-    let [creds, setCreds] = useState({ uid: '', vid: '' })
+    const uiRef = React.useRef(null)
+    let uid = React.useRef(''), vid = React.useRef('')
 
     useEffect(() => {
         (async () => {
@@ -52,7 +53,7 @@ const Home = ({ navigation }) => {
                 const data = await response.json();
                 if (data.vehicles.length > 0) {
                     setDetails({ make: data.vehicles[0].company, model: data.vehicles[0].model })
-                    setCreds({ vid: data.vehicles[0]._id.$oid, uid: creds.uid.$oid })
+                    uid.current = creds.uid.$oid, vid.current = data.vehicles[0]._id.$oid
                     joinRoom(creds.uid.$oid, data.vehicles[0]._id.$oid)
                     await SecureStore.setItemAsync("alpaDrive-vehicles", JSON.stringify(data.vehicles))
                 }
@@ -61,7 +62,7 @@ const Home = ({ navigation }) => {
                 Alert.alert('Warning', 'Failed to get updated list of vehicles. You maybe viewing an older vehicle.')
                 joinRoom(creds.uid.$oid, vehicle._id.$oid)
                 setDetails({ make: vehicle.company, model: vehicle.model })
-                setCreds({ vid: vehicle._id.$oid, uid: creds.uid.$oid })
+                uid.current = creds.uid.$oid, vid.current = vehicle._id.$oid;
             }
 
         })();
@@ -72,7 +73,7 @@ const Home = ({ navigation }) => {
 
         wsRef.current.onopen = () => {
             clearTimeout(reconnectInterval.current);
-            setConnected(true)
+            uiRef.current = setTimeout(() => setConnected(true), 1000)
         };
 
         wsRef.current.onmessage = (message) => {
@@ -90,6 +91,7 @@ const Home = ({ navigation }) => {
         };
 
         wsRef.current.onclose = () => {
+            if(uiRef.current) clearTimeout(uiRef.current)
             setConnected(false)
             scheduleReconnect();
         };
@@ -107,7 +109,7 @@ const Home = ({ navigation }) => {
         const delay = 1000; // Delay in milliseconds before attempting to reconnect
         clearTimeout(reconnectInterval.current);
         reconnectInterval.current = setTimeout(() => {
-            joinRoom();
+            joinRoom(uid.current, vid.current);
         }, delay);
     };
 
@@ -128,6 +130,7 @@ const Home = ({ navigation }) => {
                             latitudeDelta: 0.1022,
                             longitudeDelta: 0.1021,
                         }}
+                        provider={PROVIDER_GOOGLE}
                     >
                         <Marker
                             coordinate={location}
@@ -153,11 +156,11 @@ const Home = ({ navigation }) => {
                         <View style={{ flex: 0.3 }}></View>
                         <Text style={{ color: 'white' }}><FontAwesome5 name="gas-pump" size={24} color="white" />{connected ? fuel : '-- '}%</Text>
                     </View>
-                    <Pressable onPress={() => navigation.navigate('Connect', { uid: creds.uid, vid: creds.vid, make: details.make, model: details.model })} style={styles.know_more}>
+                    <Pressable onPress={() => navigation.navigate('Connect', { uid: uid.current, vid: vid.current, make: details.make, model: details.model })} style={styles.know_more}>
                         <View style={styles.know_box}>
                             <View style={{ flex: 3, justifyContent: 'center', alignItem: 'center' }}>
                                 <Text style={{ fontSize: 15, marginLeft: 15, fontWeight: '700' }}>Know more</Text>
-                                <Text style={{ color: 'gray', marginLeft: 15 }}>Live vehicle console, other stata</Text>
+                                <Text style={{ color: 'gray', marginLeft: 15 }}>Live vehicle console, other stats</Text>
                             </View>
                             <View style={{ flex: 0.3 }}></View>
                             <View style={{ flex: 0.5, justifyContent: 'center', alignItem: 'flex-start' }}>
