@@ -11,9 +11,9 @@ export default Stats = ({ navigation, route }) => {
     const [isModalVisible, setIsModalVisible] = React.useState(false);
     const { vid } = route.params
     const screens = [
-        <Daily onSwitch={() => setIsModalVisible(true)} vid={vid} />,
-        <Periodic onSwitch={() => setIsModalVisible(true)} vid={vid} />,
-        <Overall onSwitch={() => setIsModalVisible(true)} vid={vid} />
+        <Daily onSwitch={() => setIsModalVisible(true)} vid={vid} onBack={() => navigation.pop()} />,
+        <Periodic onSwitch={() => setIsModalVisible(true)} vid={vid} onBack={() => navigation.pop()} />,
+        <Overall onSwitch={() => setIsModalVisible(true)} vid={vid} onBack={() => navigation.pop()} />
     ]
     const [screen, setScreen] = React.useState(screens[0])
 

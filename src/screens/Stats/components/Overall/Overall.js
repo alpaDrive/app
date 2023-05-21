@@ -6,7 +6,7 @@ import ProgressBar from './ProgressBar';
 import configs from '../../../../assets/configs';
 import styles from './styles';
 
-const Overall = ({ onSwitch, vid }) => {
+const Overall = ({ onSwitch, onBack, vid }) => {
 
     const [details, setDetails] = useState([])
     const [degradation, setDegradation] = useState(0)
@@ -42,7 +42,7 @@ const Overall = ({ onSwitch, vid }) => {
     return <>
         <View style={{ flex: 3, flexDirection: 'row' }}>
             <View style={{ flex: 0.5, }}></View>
-            <Pressable style={{ flex: 10, justifyContent: 'center' }}>
+            <Pressable onPress={onBack} style={{ flex: 10, justifyContent: 'center' }}>
                 <Ionicons name="chevron-back" size={24} color="white" />
             </Pressable>
         </View>

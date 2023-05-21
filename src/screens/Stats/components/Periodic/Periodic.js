@@ -6,7 +6,7 @@ import { AntDesign } from '@expo/vector-icons';
 import configs from '../../../../assets/configs';
 import styles from './styles';
 
-const Periodic = ({ onSwitch, vid }) => {
+const Periodic = ({ onSwitch, onBack, vid }) => {
 
     const [fromDate, setFromDate] = useState(new Date());
     const [toDate, setToDate] = useState(new Date());
@@ -62,7 +62,7 @@ const Periodic = ({ onSwitch, vid }) => {
     return <>
         <View style={{ flex: 2, flexDirection: 'row' }}>
             <View style={{ flex: 0.5, }}></View>
-            <Pressable style={{ flex: 10, justifyContent: 'center' }}>
+            <Pressable onPress={onBack} style={{ flex: 10, justifyContent: 'center' }}>
                 <Ionicons name="chevron-back" size={24} color="white" />
             </Pressable>
         </View>

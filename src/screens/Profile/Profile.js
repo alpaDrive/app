@@ -32,10 +32,10 @@ const Profile = ({ navigation }) => {
         <View style={styles.buttons}>
             <View style={styles.faq}>
                 <View style={styles.faq2}></View>
-                <View style={styles.faq1}>
+                <Pressable onPress={() => navigation.navigate('Ques')} style={styles.faq1}>
                     <Text style={{ fontSize: 15, color: '#ffff' }}>FAQ</Text>
                     <Text style={{ fontSize: 10, color: '#8D8A8A' }}>View the most asked questions </Text>
-                </View>
+                </Pressable>
                 <View style={styles.faq2}>
                     <AntDesign name="right" size={10} color="white" />
                 </View>

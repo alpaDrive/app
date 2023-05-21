@@ -1,27 +1,23 @@
-import { View, Text ,ScrollView} from 'react-native'
+import { View, Text, ScrollView, Pressable } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialIcons } from '@expo/vector-icons';
-import styles from'./styles';
+import styles from './styles';
 
-const Ques = () => {
-   
-    return (
-        <SafeAreaView style={styles.container}>
+const Ques = ({ navigation }) => {
 
-            <View style={styles.titleview}>
-                <View style={styles.arrow}> 
-                <MaterialIcons name="keyboard-arrow-left" size={30} color="white" /></View>
-                <View style={styles.title}><Text style={styles.titletext}>FAQ</Text></View>
-                <View style={styles.menu}>
-                    
-                </View>
-
-            </View>
-
-
-
-            <View style={{ flex: 1 }}>
-            <ScrollView>
+  return (
+    <SafeAreaView style={styles.container}>
+      <View style={styles.titleview}>
+        <Pressable onPress={() => navigation.pop()} style={styles.arrow}>
+          <MaterialIcons name="keyboard-arrow-left" size={30} color="white" />
+        </Pressable>
+        <View style={styles.title}>
+          <Text style={styles.titletext}>FAQ</Text>
+        </View>
+        <View style={styles.menu} />
+      </View>
+      <View style={{ flex: 1 }}>
+        <ScrollView>
           <View style={styles.welcomeview}>
             <Text style={styles.one}>Question 1</Text>
             <Text style={styles.content}>

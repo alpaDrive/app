@@ -6,7 +6,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import styles from './styles';
 import configs from '../../../../assets/configs';
 
-const Daily = ({ onSwitch, vid }) => {
+const Daily = ({ onSwitch, onBack, vid }) => {
 
     const [date, setDate] = useState(new Date());
     const [picker, showPicker] = useState(false);
@@ -68,7 +68,7 @@ const Daily = ({ onSwitch, vid }) => {
     return <>
         <View style={{ flex: 1, flexDirection: 'row' }}>
             <View style={{ flex: 0.5 }}></View>
-            <Pressable style={{ flex: 10, justifyContent: 'center' }}>
+            <Pressable onPress={onBack} style={{ flex: 10, justifyContent: 'center' }}>
                 <Ionicons name="chevron-back" size={24} color="white" />
             </Pressable>
         </View>
