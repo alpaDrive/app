@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, Pressable } from 'react-native'
+import { View, Text, Image, Pressable } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Feather } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -24,37 +24,35 @@ const Connect = ({ navigation, route }) => {
   const uiRef = React.useRef(null)
 
   const [isFlipped, setIsFlipped] = useState(false);
-  const [text1, setText1] = useState('0');
+  const [text1, setText1] = useState('--');
   const [text2, setText2] = useState('Total');
-  const [isLeftArrowVisible, setIsLeftArrowVisible] = useState(true);
-  const [isRightArrowVisible, setIsRightArrowVisible] = useState(true);
 
-  const handleLeftArrowClick = () => {
-    if (!isFlipped) {
-      setText1('23');
-      setText2('Trip A');
-      setIsLeftArrowVisible(false);
-    } else {
-      setText1('43,500');
-      setText2('Total');
-      setIsRightArrowVisible(true);
-    }
-    setIsFlipped(!isFlipped);
-  };
+  // const handleLeftArrowClick = () => {
+  //   if (!isFlipped) {
+  //     setText1('23');
+  //     setText2('Trip A');
+  //     // setIsLeftArrowVisible(false);
+  //   } else {
+  //     setText1('43,500');
+  //     setText2('Total');
+  //     // setIsRightArrowVisible(true);
+  //   }
+  //   setIsFlipped(!isFlipped);
+  // };
 
-  const handleRightArrowClick = () => {
-    if (!isFlipped) {
-      setText1('57');
-      setText2('Trip B');
-      setIsRightArrowVisible(false);
-      setIsLeftArrowVisible(true);
-    } else {
-      setText1('43,500');
-      setText2('Total');
-      setIsLeftArrowVisible(true);
-    }
-    setIsFlipped(!isFlipped);
-  };
+  // const handleRightArrowClick = () => {
+  //   if (!isFlipped) {
+  //     setText1('57');
+  //     setText2('Trip B');
+  //     // setIsRightArrowVisible(false);
+  //     // setIsLeftArrowVisible(true);
+  //   } else {
+  //     setText1('43,500');
+  //     setText2('Total');
+  //     // setIsLeftArrowVisible(true);
+  //   }
+  //   setIsFlipped(!isFlipped);
+  // };
 
   const joinRoom = () => {
     wsRef.current = new WebSocket(`wss://${configs.SERVER_URL}/join/user/${uid}/${vid}`);
@@ -110,7 +108,7 @@ const Connect = ({ navigation, route }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.titleview}>
-        <View style={styles.titleflex}><Text style={styles.title}>ALPADRIVE</Text></View>
+        <View style={styles.titleflex}><Image style={styles.title} source={require('../../assets/img/logo.png')} /></View>
         <View style={styles.titleempty}></View>
         <Pressable onPress={() => navigation.navigate('Profile')} style={styles.iconflex}>
           <Feather name="user" size={29} color="white" />
@@ -189,7 +187,7 @@ const Connect = ({ navigation, route }) => {
       <View style={styles.fuelview}>
         <View style={styles.fuelflex}><Text style={styles.fueltext}>
           <FontAwesome5 name="gas-pump" size={20} color="white" />
-          <Text style={styles.subtext}>  Fuel</Text> (estimated 250km remaining) <Text style={styles.subtext}> {connected ? fuelPercentage : '--'}%</Text></Text></View>
+          <Text style={styles.subtext}>  Fuel</Text> {connected ? `estimated ${fuelPercentage} kms remaining` : null} <Text style={styles.subtext}> {connected ? fuelPercentage : '--'}%</Text></Text></View>
         <View style={styles.fuelmeter}>
           <View style={styles.meterout}>
             <View style={[styles.meterin, { width: `${fuelPercentage}%` }]}></View>
@@ -198,23 +196,23 @@ const Connect = ({ navigation, route }) => {
       </View>
       <View style={styles.odoview}>
         <View style={styles.arrowflex}>
-          {isLeftArrowVisible && (
+          {/* {isLeftArrowVisible && (
             <TouchableOpacity style={styles.button} onPress={handleLeftArrowClick}>
               <MaterialIcons name="keyboard-arrow-left" size={30} color="white" />
             </TouchableOpacity>
-          )}
+          )} */}
         </View>
         <View style={styles.odoflex}>
-          <View style={styles.odocom}>
-            <Text style={styles.odono}>{text1} km</Text>
-            <Text style={styles.odotext}>{text2}</Text></View>
+          <View style={[styles.odocom, { backgroundColor: connected ? '#1559DC' : 'grey' }]}>
+            <Text style={styles.odono}>{connected ? `${text1} kms` : 'Disconnected'}</Text>
+            <Text style={styles.odotext}>{connected ? text2 : 'Vehicle offline'}</Text></View>
         </View>
         <View style={styles.arrowflex}>
-          {isRightArrowVisible && (
+          {/* {isRightArrowVisible && (
             <TouchableOpacity style={styles.button} onPress={handleRightArrowClick}>
               <MaterialIcons name="keyboard-arrow-right" size={30} color="white" />
             </TouchableOpacity>
-          )}
+          )} */}
         </View>
       </View>
       <Pressable onPress={() => navigation.navigate('Stats', { vid: vid })} style={styles.statview}>

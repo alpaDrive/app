@@ -52,7 +52,7 @@ const Daily = ({ onSwitch, onBack, vid }) => {
                     { label: 'Average Speed', value: `${body.average_speed}km/hr` },
                     { label: 'Maximum Speed', value: `${body.max_speed.speed}km/hr` },
                     { label: 'Last odometer', value: `${body.last_odometer}kms` },
-                    { label: 'Estimated time of running', value: `~${body.distance_travelled / body.average_speed} hrs` }
+                    { label: 'Estimated time of running', value: `~ ${parseFloat(body.distance_travelled / body.average_speed).toFixed(1)} hrs` }
                 ])
                 setStress(body.stress_count)
                 setDegradation(body.degradation)

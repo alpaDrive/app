@@ -29,7 +29,7 @@ const Login = ({ navigation }) => {
                 await SecureStore.setItemAsync("alpaDrive-user", JSON.stringify(body))
                 await SecureStore.setItemAsync("alpaDrive-vehicles", JSON.stringify(body.vehicles))
                 let screen = 'Home'
-                if(body.vehicles.length === 0) screen = 'Pairing' 
+                if(body.vehicles.length === 0) screen = 'Empty' 
                 navigation.reset({
                     index: 0,
                     routes: [{ name: screen }],
@@ -59,7 +59,7 @@ const Login = ({ navigation }) => {
             </View>
             {!keyboardActive ? <View style={styles.welcomeview}>
                 <Image style={styles.title} source={require('../../assets/img/logo.png')} />
-                <Text style={styles.welcome}>Welcome</Text>
+                <Text style={styles.welcome}>Buckle Up</Text>
                 <Text style={styles.details}>Enter your details</Text>
             </View> : null}
             <View style={styles.inputview}>

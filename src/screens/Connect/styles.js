@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 
 export default StyleSheet.create({
   container: {
@@ -23,9 +23,8 @@ export default StyleSheet.create({
   },
 
   title: {
-    color: 'white',
-    fontSize: 30,
-    fontWeight: '300'
+    width: Dimensions.get('window').width / 2.5,
+    resizeMode: 'contain'
   },
 
   titleempty: {
@@ -74,7 +73,7 @@ export default StyleSheet.create({
 
   modeltext: {
     color: 'white',
-    fontSize: 30,
+    fontSize: Dimensions.get('window').width / 15,
     fontWeight: '600',
     marginLeft: 23
   },
@@ -89,7 +88,7 @@ export default StyleSheet.create({
 
   companytext: {
     color: '#F9F9F9',
-    fontSize: 20,
+    fontSize: Dimensions.get('window').width / 22,
     fontWeight: '400',
     marginLeft: 25,
     marginTop: -5
@@ -318,7 +317,6 @@ export default StyleSheet.create({
   odocom: {
     height: 60,
     width: 230,
-    backgroundColor: '#1559DC',
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',

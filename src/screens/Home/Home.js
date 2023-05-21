@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Pressable, Alert } from 'react-native';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
-import { FontAwesome5 } from '@expo/vector-icons';
+import { FontAwesome5, Feather } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import * as Location from 'expo-location';
 import * as SecureStore from 'expo-secure-store';
@@ -91,7 +91,7 @@ const Home = ({ navigation }) => {
         };
 
         wsRef.current.onclose = () => {
-            if(uiRef.current) clearTimeout(uiRef.current)
+            if (uiRef.current) clearTimeout(uiRef.current)
             setConnected(false)
             scheduleReconnect();
         };
@@ -115,11 +115,6 @@ const Home = ({ navigation }) => {
 
     return (
         <View style={styles.main_container}>
-            {/* <View style={ styles.profile }>
-                <View style={ styles.profile_container }>
-                    <Feather name="user" size={ 24 } color="white" />
-                </View>
-            </View> */}
             <View style={styles.map_container}>
                 <View style={styles.container}>
                     <MapView
@@ -137,6 +132,9 @@ const Home = ({ navigation }) => {
                             title="Vehicle"
                         />
                     </MapView>
+                    <Pressable onPress={() => navigation.navigate('Profile')} style={styles.profile}>
+                        <Feather name="user" size={24} color="white" />
+                    </Pressable>
                 </View>
                 <View style={styles.bottom_container}>
                     <View style={styles.brand_name}>
@@ -171,11 +169,8 @@ const Home = ({ navigation }) => {
                     <View style={{ flex: .2 }}></View>
                 </View>
             </View>
-
         </View>
     );
 };
-
-
 
 export default Home;

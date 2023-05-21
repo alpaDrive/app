@@ -15,20 +15,20 @@ import Stats from './src/screens/Stats/Stats';
 
 const Stack = createNativeStackNavigator()
 
-export default function App () {
+export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName='Landing'>
-        <Stack.Screen name='Landing' component={ Landing } options={ { headerShown: false } } />
-        <Stack.Screen name='Login' component={ Login } options={ { headerShown: false } } />
-        <Stack.Screen name='SignUp' component={ SignUp } options={ { headerShown: false } } />
-        <Stack.Screen name='Profile' component={ Profile } options={ { headerShown: false } } />
-        <Stack.Screen name='Ques' component={Ques} options={{ headerShown: false }} />
-        <Stack.Screen name='Empty' component={Empty} options={{ headerShown: false }} />
-        <Stack.Screen name='Pairing' component={Pairing} options={{ headerShown: false }} />
-        <Stack.Screen name='Home' component={Home} options={{ headerShown: false }} />
-        <Stack.Screen name='Connect' component={Connect} options={{ headerShown: false }} />
-        <Stack.Screen name='Stats' component={Stats} options={{ headerShown: false }} />
+        <Stack.Screen name='Landing' component={Landing} options={{ headerShown: false }} />
+        <Stack.Screen name='Login' component={Login} options={{ headerShown: false, animation: 'slide_from_bottom' }} />
+        <Stack.Screen name='SignUp' component={SignUp} options={{ headerShown: false, animation: 'fade_from_bottom' }} />
+        <Stack.Screen name='Profile' component={Profile} options={{ headerShown: false, animation: 'slide_from_bottom' }} />
+        <Stack.Screen name='Ques' component={Ques} options={{ headerShown: false, animation: 'slide_from_right' }} />
+        <Stack.Screen name='Empty' component={Empty} options={{ headerShown: false, animation: 'slide_from_bottom' }} />
+        <Stack.Screen name='Pairing' component={Pairing} options={{ headerShown: false, animation: 'slide_from_bottom' }} />
+        <Stack.Screen name='Home' component={Home} options={{ headerShown: false, animation: 'slide_from_bottom' }} />
+        <Stack.Screen name='Connect' component={Connect} options={{ headerShown: false, animation: 'slide_from_right' }} />
+        <Stack.Screen name='Stats' component={Stats} options={{ headerShown: false, animation: 'slide_from_right' }} />
       </Stack.Navigator>
       <StatusBar style='light' backgroundColor='#00000D' />
     </NavigationContainer>

@@ -8,8 +8,6 @@ import styles from './styles';
 
 
 const Empty = ({ navigation }) => {
-
-
   return (
     <SafeAreaView style={ styles.root }>
       <View style={ { flex: 0.5 } }></View>
