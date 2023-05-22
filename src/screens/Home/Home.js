@@ -87,6 +87,7 @@ const Home = ({ navigation }) => {
                 const data = JSON.parse(message.data).message
                 setSpeed(data.speed)
                 setRPM(data.rpm)
+                setFuel(data.fuel)
                 setGear(`Gear ${data.gear > 0 ? data.gear : 'N'}`)
                 if (data.location.latitude > 0 && data.location.longitude > 0) setLocation(data.location)
             }

@@ -23,9 +23,9 @@ const Connect = ({ navigation, route }) => {
   const reconnectInterval = React.useRef(null);
   const uiRef = React.useRef(null)
 
-  const [isFlipped, setIsFlipped] = useState(false);
+  // const [isFlipped, setIsFlipped] = useState(false);
   const [text1, setText1] = useState('--');
-  const [text2, setText2] = useState('Total');
+  // const [text2, setText2] = useState('Total');
 
   // const handleLeftArrowClick = () => {
   //   if (!isFlipped) {
@@ -69,6 +69,7 @@ const Connect = ({ navigation, route }) => {
         setRPM(data.rpm)
         setGear(`${data.gear > 0 ? data.gear : 'N'}`)
         setcoolTemp(parseInt((data.temp / 120) * 100))
+        setFuelPercentage(data.fuel)
         setText1(data.odo)
       }
     };
@@ -187,7 +188,7 @@ const Connect = ({ navigation, route }) => {
       <View style={styles.fuelview}>
         <View style={styles.fuelflex}><Text style={styles.fueltext}>
           <FontAwesome5 name="gas-pump" size={20} color="white" />
-          <Text style={styles.subtext}>  Fuel</Text> {connected ? `estimated ${fuelPercentage} kms remaining` : null} <Text style={styles.subtext}> {connected ? fuelPercentage : '--'}%</Text></Text></View>
+          <Text style={styles.subtext}>  Fuel</Text> {connected ? `estimated ${parseInt((fuelPercentage / 100) * 16 * 30)} kms remaining` : null} <Text style={styles.subtext}> {connected ? fuelPercentage : '--'}%</Text></Text></View>
         <View style={styles.fuelmeter}>
           <View style={styles.meterout}>
             <View style={[styles.meterin, { width: `${fuelPercentage}%` }]}></View>
@@ -205,7 +206,7 @@ const Connect = ({ navigation, route }) => {
         <View style={styles.odoflex}>
           <View style={[styles.odocom, { backgroundColor: connected ? '#1559DC' : 'grey' }]}>
             <Text style={styles.odono}>{connected ? `${text1} kms` : 'Disconnected'}</Text>
-            <Text style={styles.odotext}>{connected ? text2 : 'Vehicle offline'}</Text></View>
+            <Text style={styles.odotext}>{connected ? 'Total' : 'Vehicle offline'}</Text></View>
         </View>
         <View style={styles.arrowflex}>
           {/* {isRightArrowVisible && (
