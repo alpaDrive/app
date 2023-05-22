@@ -11,6 +11,12 @@ import styles from './styles';
 const Home = ({ navigation }) => {
 
     const [location, setLocation] = useState({ latitude: 0.0, longitude: 0.0 });
+    const [region, setRegion] = useState({
+        latitude: location.latitude,
+        longitude: location.longitude,
+        latitudeDelta: 0.1022,
+        longitudeDelta: 0.1021,
+      });
     const [details, setDetails] = useState({ make: '', model: '' })
     const [connected, setConnected] = useState(false)
 
@@ -113,18 +119,21 @@ const Home = ({ navigation }) => {
         }, delay);
     };
 
+    useEffect(() => {
+        setRegion({
+          ...region,
+          latitude: location.latitude,
+          longitude: location.longitude,
+        });
+      }, [location]);
+
     return (
         <View style={styles.main_container}>
             <View style={styles.map_container}>
                 <View style={styles.container}>
                     <MapView
                         style={styles.map}
-                        region={{
-                            latitude: location.latitude,
-                            longitude: location.longitude,
-                            latitudeDelta: 0.1022,
-                            longitudeDelta: 0.1021,
-                        }}
+                        region={region}
                         provider={PROVIDER_GOOGLE}
                     >
                         <Marker
