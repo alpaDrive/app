@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as SecureStore from 'expo-secure-store'
-import { View, Text, TextInput, Pressable, Alert, Keyboard, Image } from 'react-native'
+import { View, Text, TextInput, Pressable, Alert, Keyboard, Image, ActivityIndicator } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import configs from '../../assets/configs';
 import styles from './styles';
@@ -10,11 +10,13 @@ const Login = ({ navigation }) => {
     const [id, setid] = React.useState('')
     const [password, setPassword] = React.useState('')
     const [keyboardActive, setKeyboard] = React.useState(false)
+    const [buffering, setBuffering] = React.useState(false)
     const field = React.useRef(null)
 
     const submit = async () => {
         if (!id || !password) Alert.alert('Oops', "You can't leave a field blank!")
         else {
+            setBuffering(true)
             const response = await fetch(`https://${configs.SERVER_URL}/login`, {
                 method: 'POST',
                 headers: new Headers(),
@@ -29,7 +31,7 @@ const Login = ({ navigation }) => {
                 await SecureStore.setItemAsync("alpaDrive-user", JSON.stringify(body))
                 await SecureStore.setItemAsync("alpaDrive-vehicles", JSON.stringify(body.vehicles))
                 let screen = 'Home'
-                if(body.vehicles.length === 0) screen = 'Empty' 
+                if (body.vehicles.length === 0) screen = 'Empty'
                 navigation.reset({
                     index: 0,
                     routes: [{ name: screen }],
@@ -38,6 +40,7 @@ const Login = ({ navigation }) => {
             } else {
                 Alert.alert(JSON.stringify(body.error))
             }
+            setBuffering(false)
         }
     }
 
@@ -80,9 +83,12 @@ const Login = ({ navigation }) => {
                     onSubmitEditing={submit}
                     style={styles.textinput}
                 />
+                {buffering ? <View style={{ marginVertical: 32, alignItems: 'center', height: 60, justifyContent: 'center' }}>
+                    <ActivityIndicator size='large' color={'#1559DC'} />
+                </View>:
                 <Pressable onPress={submit} style={styles.button}>
                     <Text style={styles.buttontext}>Go</Text>
-                </Pressable>
+                </Pressable>}
             </View>
             {!keyboardActive ? <View style={[styles.subtextview, { flex: 2 }]}>
                 <Text style={styles.subtexted}>Dont't have an account?</Text><Pressable onPress={() => navigation.navigate('SignUp')}><Text style={styles.sign}> Sign up</Text></Pressable>

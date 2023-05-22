@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as SecureStore from 'expo-secure-store'
-import { View, Text, TextInput, Pressable, Alert, Keyboard, Image } from 'react-native'
+import { View, Text, TextInput, Pressable, Alert, Keyboard, Image, ActivityIndicator } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import configs from '../../assets/configs';
 import styles from './styles';
@@ -12,10 +12,12 @@ const SignUp = ({ navigation }) => {
     const [email, setemail] = React.useState('')
     const [password, setPassword] = React.useState('')
     const [keyboardActive, setKeyboard] = React.useState(false)
+    const [buffering, setBuffering] = React.useState(false)
 
     const submit = async () => {
         if (!name || !username || !email || !password) Alert.alert('Oops', "You can't leave a field blank!")
         else {
+            setBuffering(true)
             const response = await fetch(`https://${configs.SERVER_URL}/signup`, {
                 method: 'POST',
                 headers: new Headers(),
@@ -44,6 +46,7 @@ const SignUp = ({ navigation }) => {
             } else {
                 Alert.alert(JSON.stringify(body.error))
             }
+            setBuffering(false)
         }
     }
 
@@ -96,9 +99,12 @@ const SignUp = ({ navigation }) => {
                     onChangeText={text => setPassword(text)}
                     style={styles.textinput}
                 />
+                {buffering ? <View style={{ marginVertical: 32, alignItems: 'center', height: 60, justifyContent: 'center' }}>
+                    <ActivityIndicator size='large' color={'#1559DC'} />
+                </View>:
                 <Pressable onPress={submit} style={styles.button}>
-                    <Text style={styles.buttontext}>Continue</Text>
-                </Pressable>
+                    <Text style={styles.buttontext}>Go</Text>
+                </Pressable>}
             </View>
             {!keyboardActive ? <View style={styles.subtextview}>
                 <Text style={styles.subtexted}>Already have an account?</Text><Pressable onPress={() => navigation.navigate('Login')}><Text style={styles.sign}> Log in</Text></Pressable>

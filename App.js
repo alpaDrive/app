@@ -30,7 +30,7 @@ export default function App() {
         <Stack.Screen name='Connect' component={Connect} options={{ headerShown: false, animation: 'slide_from_right' }} />
         <Stack.Screen name='Stats' component={Stats} options={{ headerShown: false, animation: 'slide_from_right' }} />
       </Stack.Navigator>
-      <StatusBar style='light' backgroundColor='#00000D' />
+      <StatusBar style='auto' />
     </NavigationContainer>
   );
 }

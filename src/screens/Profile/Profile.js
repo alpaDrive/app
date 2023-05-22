@@ -60,16 +60,7 @@ const Profile = ({ navigation }) => {
                     <AntDesign name="right" size={10} color="white" />
                 </View>
             </View>
-            <View style={styles.faq}>
-                <View style={styles.faq2}></View>
-                <View style={styles.faq1}>
-                    <Text style={{ fontSize: 15, color: '#ffff' }}>Dummy Option</Text>
-                    <Text style={{ fontSize: 10, color: '#8D8A8A' }}>To be implemented in a future release</Text>
-                </View>
-                <View style={styles.faq2}>
-                    <AntDesign name="right" size={10} color="white" />
-                </View>
-            </View>
+            <View style={{ height: 80 }} />
         </View>
         <View style={styles.signout}>
             <Pressable onPress={async () => {
