@@ -1,17 +1,23 @@
 import * as React from 'react'
 import * as SecureStore from 'expo-secure-store'
-import { SafeAreaView, View, Text, Pressable } from 'react-native';
+import { SafeAreaView, View, Text, Pressable, Modal, ActivityIndicator, Dimensions } from 'react-native';
+import QRCode from 'react-native-qrcode-svg';
 import { AntDesign } from '@expo/vector-icons';
 import styles from './styles';
 
 const Profile = ({ navigation }) => {
 
     let [creds, setCreds] = React.useState({})
+    let [popup, showPopUp] = React.useState(false)
+    let [vehicle, setVehicle] = React.useState(null)
 
     React.useEffect(() => {
         async function check() {
             let result = await SecureStore.getItemAsync("alpaDrive-user");
             if (result) setCreds(JSON.parse(result))
+
+            let data = JSON.parse(await SecureStore.getItemAsync("alpaDrive-vehicles"))[0]
+            setVehicle(data)
         }
         check()
     }, [])
@@ -29,6 +35,20 @@ const Profile = ({ navigation }) => {
                 {creds.email ? <Text style={{ color: 'white' }}>{creds.email.replace(/^"|"$/g, '')}</Text> : null}
             </View>
         </View>
+        <Modal visible={popup} onRequestClose={() => showPopUp(false)} transparent animationType="slide">
+            <View style={styles.modalContainer}>
+                <Pressable onPress={() => showPopUp(false)} style={styles.modalblank} />
+                {vehicle != null ? <View style={styles.modalContent}>
+                    <Text style={styles.helpertext}>Scan this on your partner's mobile app to pair</Text>
+                    <QRCode size={Dimensions.get('window').height / 5.5} value={JSON.stringify({ vid: vehicle._id.$oid, initial: false })} />
+                    <Text style={styles.model}>{vehicle.model}</Text>
+                    <Text style={styles.make}>{vehicle.company}</Text>
+                </View> :
+                    <View style={styles.modalContent}>
+                        <ActivityIndicator size='large' color={'#1559DC'} />
+                    </View>}
+            </View>
+        </Modal>
         <View style={styles.buttons}>
             <View style={styles.faq}>
                 <View style={styles.faq2}></View>
@@ -52,10 +72,10 @@ const Profile = ({ navigation }) => {
             </View>
             <View style={styles.faq}>
                 <View style={styles.faq2}></View>
-                <View style={styles.faq1}>
-                    <Text style={{ fontSize: 15, color: '#ffff' }}>Dummy Option</Text>
-                    <Text style={{ fontSize: 10, color: '#8D8A8A' }}>To be implemented in a future release</Text>
-                </View>
+                <Pressable onPress={() => showPopUp(true)} style={styles.faq1}>
+                    <Text style={{ fontSize: 15, color: '#ffff' }}>Share Vehicle</Text>
+                    <Text style={{ fontSize: 10, color: '#8D8A8A' }}>Share the currently active vehicle</Text>
+                </Pressable>
                 <View style={styles.faq2}>
                     <AntDesign name="right" size={10} color="white" />
                 </View>
