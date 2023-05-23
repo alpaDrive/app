@@ -30,7 +30,7 @@ const SignUp = ({ navigation }) => {
             })
             const body = await response.json()
             if (response.ok) {
-                await SecureStore.setItemAsync("alpaDrive", JSON.stringify({
+                await SecureStore.setItemAsync("alpaDrive-user", JSON.stringify({
                     uid: body.uid,
                     name: name,
                     username: username,
@@ -38,11 +38,12 @@ const SignUp = ({ navigation }) => {
                     password: password,
                     vehicles: []
                 }))
+                await SecureStore.setItemAsync("alpaDrive-vehicles", JSON.stringify([]))
                 navigation.reset({
                     index: 0,
-                    routes: [{ name: 'Profile' }],
+                    routes: [{ name: 'Empty' }],
                 });
-                navigation.navigate('Profile')
+                navigation.navigate('Empty')
             } else {
                 Alert.alert(JSON.stringify(body.error))
             }

@@ -19,7 +19,7 @@ const Landing = ({ navigation }) => {
             let result = await SecureStore.getItemAsync("alpaDrive-user");
             if (result != null) {
                 if(JSON.parse(await SecureStore.getItemAsync("alpaDrive-vehicles")).length > 0) goTo('Home')
-                else goTo('Pairing')
+                else goTo('Empty')
             }
             else goTo('Login')
         }
