@@ -1,8 +1,6 @@
 # app
 The alpaDrive mobile app
 
-> ⚠️ This branch contains the latest build passing code of the app. Not all features or functions may work as intended and this code may or may not be merged into a future release
-
 ## Table Of Contents
 * [What's this?](#whats-this)
     - [Role in the UX](#role-in-the-ux)
