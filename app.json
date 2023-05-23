@@ -9,7 +9,7 @@
     "splash": {
       "image": "./src/assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#00000D"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -21,10 +21,21 @@
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
+      },
+      "package": "com.muhammedijas.alpaDrive",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyAjf2ELyg9Gum-34VW4806IHTW8XNUKqrE"
+        }
       }
     },
     "web": {
       "favicon": "./src/assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "ecf6b8dc-75fd-4085-8952-845172600fab"
+      }
     }
   }
 }
