@@ -2,14 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { SafeAreaView, View, Text, TouchableOpacity, Image, TextInput, Alert } from 'react-native';
 import { Vibration } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { Camera } from 'expo-camera';
+import { BarCodeScanner } from 'expo-barcode-scanner';
 import * as SecureStore from 'expo-secure-store';
 import Modal from 'react-native-modal';
 import configs from '../../assets/configs';
 import styles from './styles';
 
 const Pairing = ({ navigation }) => {
-    const [flash, setFlash] = useState(Camera.Constants.FlashMode.off);
     const [hasPermission, setHasPermission] = useState(null);
     const [isQRCodeDetected, setIsQRCodeDetected] = useState(false);
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -17,25 +16,26 @@ const Pairing = ({ navigation }) => {
     const [input2, setInput2] = useState('');
     const cameraRef = React.useRef(null);
 
-    let uid = '', vehicles = []
+    let vehicles = []
+    let uid = React.useRef('')
 
     useEffect(() => {
         (async () => {
-            const { status } = await Camera.requestCameraPermissionsAsync();
+            const { status } = await BarCodeScanner.requestPermissionsAsync();
             setHasPermission(status === 'granted');
 
-            uid = JSON.parse(await SecureStore.getItemAsync("alpaDrive-user")).uid.$oid;
+            uid.current = JSON.parse(await SecureStore.getItemAsync("alpaDrive-user")).uid.$oid;
             vehicles = JSON.parse(await SecureStore.getItemAsync("alpaDrive-vehicles"));
         })();
     }, []);
 
-    const handleTorch = () => {
-        setFlash(
-            flash === Camera.Constants.FlashMode.off
-                ? Camera.Constants.FlashMode.torch
-                : Camera.Constants.FlashMode.off
-        );
-    };
+    // const handleTorch = () => {
+    //     setFlash(
+    //         flash === Camera.Constants.FlashMode.off
+    //             ? Camera.Constants.FlashMode.torch
+    //             : Camera.Constants.FlashMode.off
+    //     );
+    // };
 
     const focusArea = {
         x: 0.2, // left position
@@ -86,31 +86,26 @@ const Pairing = ({ navigation }) => {
                         <Image source={require('../../assets/logo.png')} />
                     </View>
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                        <TouchableOpacity onPress={handleTorch}>
+                        {/* <TouchableOpacity onPress={() => {}}>
                             {flash === Camera.Constants.FlashMode.off ? (
                                 <Ionicons name="flash-off-sharp" size={24} color="white" />
                             ) : (
                                 <Ionicons name="flash" size={24} color="white" />
                             )}
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
                     </View>
                 </View>
             </View>
             {hasPermission ? (
                 <React.Fragment>
-                    <Camera
-                        style={styles.camera}
-                        type={Camera.Constants.Type.back}
-                        flashMode={flash}
-                        ref={cameraRef}
-                        ratio="16:9"
-                        rectOfInterest={focusArea}
-                        onBarCodeScanned={async ({ data }) => {
+                    <BarCodeScanner
+                        barCodeTypes={[BarCodeScanner.Constants.BarCodeType.qr]}
+                        onBarCodeScanned={isQRCodeDetected ? undefined : async ({ type, data }) => {
                             try {
                                 const parsedData = JSON.parse(data);
                                 if (parsedData.hasOwnProperty("vid") && parsedData.hasOwnProperty("initial")) {
-                                    Vibration.vibrate(10);
                                     setIsQRCodeDetected(true)
+                                    Vibration.vibrate(10);
                                     for (const each of vehicles)
                                         if (parsedData.vid === each._id.$oid)
                                             Alert.alert(
@@ -128,8 +123,7 @@ const Pairing = ({ navigation }) => {
                                                     }
                                                 ]
                                             )
-                                        console.log(`http://${configs.SERVER_URL}/pair/${parsedData.vid}/${uid}?initial=${parsedData.initial}`)
-                                    const response = await fetch(`https://${configs.SERVER_URL}/pair/${parsedData.vid}/${uid}?initial=${parsedData.initial}`)
+                                    const response = await fetch(`https://${configs.SERVER_URL}/pair/${parsedData.vid}/${uid.current}?initial=${parsedData.initial}`)
                                     const body = await response.json()
                                     if (response.ok || response.status === 500) {
                                         if (parsedData.initial) { setIsModalVisible(true); vid = parsedData.vid; }
@@ -149,6 +143,7 @@ const Pairing = ({ navigation }) => {
                                 setIsQRCodeDetected(false)
                             }
                         }}
+                        style={styles.camera}
                     />
                     {isQRCodeDetected && (
                         <View style={styles.vibrationOverlay}>

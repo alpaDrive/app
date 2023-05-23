@@ -60,7 +60,7 @@ const Profile = ({ navigation }) => {
                     <AntDesign name="right" size={10} color="white" />
                 </View>
             </View>
-            <View style={styles.faq}>
+            {vehicle != null ? <View style={styles.faq}>
                 <View style={styles.faq2}></View>
                 <View style={styles.faq1}>
                     <Text style={{ fontSize: 15, color: '#ffff' }}>Switch Vehicle</Text>
@@ -69,8 +69,8 @@ const Profile = ({ navigation }) => {
                 <View style={styles.faq2}>
                     <AntDesign name="right" size={10} color="white" />
                 </View>
-            </View>
-            <View style={styles.faq}>
+            </View> : <View style={{ height: 80 }} />}
+            {vehicle != null ? <View style={styles.faq}>
                 <View style={styles.faq2}></View>
                 <Pressable onPress={() => showPopUp(true)} style={styles.faq1}>
                     <Text style={{ fontSize: 15, color: '#ffff' }}>Share Vehicle</Text>
@@ -79,7 +79,7 @@ const Profile = ({ navigation }) => {
                 <View style={styles.faq2}>
                     <AntDesign name="right" size={10} color="white" />
                 </View>
-            </View>
+            </View> : <View style={{ height: 80 }} />}
             <View style={{ height: 80 }} />
         </View>
         <View style={styles.signout}>
@@ -94,7 +94,7 @@ const Profile = ({ navigation }) => {
             }}>
                 <Text style={{ fontSize: 15, color: 'white' }}>SIGN OUT</Text>
             </Pressable>
-            <Text style={{ fontSize: 10, color: '#8D8A8A' }}>v0.1..0</Text>
+            <Text style={{ fontSize: 10, color: '#8D8A8A' }}>v0.1.0</Text>
             <Text style={{ fontSize: 8, color: '#8D8A8A' }}>Designed by alpaDrive</Text>
         </View>
     </SafeAreaView>
