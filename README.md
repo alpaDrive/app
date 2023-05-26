@@ -1,5 +1,7 @@
-# app
-The alpaDrive mobile app
+<img src="https://github.com/alpaDrive/app/assets/50231856/eebf6a38-25ab-4fce-96fc-64c1222f2aa4" alt="alpaDrive Logo" width="250" align="right" >
+
+# `app` 📱
+> The alpaDrive mobile app, written using React Native & Expo. This is what an average alpaDrive user would open daily, so come let's build it together!
 
 ## Table Of Contents
 * [What's this?](#whats-this)
