@@ -1,3 +1,3 @@
 export default {
-    SERVER_URL: 'alpadrive.selseus.com'
+    SERVER_URL: 'alpadrive.com'
 }
