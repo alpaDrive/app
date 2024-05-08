@@ -55,3 +55,13 @@ export const login = (id, password) => {
         }
     })    
 }
+
+export const getVid = async() => {
+  const vid = JSON.parse(await SecureStore.getItemAsync("alpaDrive-vehicles"))[0]._id.$oid
+  return vid;
+} 
+
+export const getUid = async() => {
+  const uid = JSON.parse(await SecureStore.getItemAsync("alpaDrive-user")).uid.$oid
+  return uid;
+}

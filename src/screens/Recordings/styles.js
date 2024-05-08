@@ -30,8 +30,8 @@ export default StyleSheet.create({
         alignItems: 'center'
     },
     card: {
-        width: Dimensions.get('window').width-40,
-        height: Dimensions.get('window').height/3.5,
+        width: Dimensions.get('window').width - 40,
+        height: Dimensions.get('window').height / 3.5,
         backgroundColor: '#051128',
         borderRadius: 20,
         marginTop: 20
@@ -46,8 +46,8 @@ export default StyleSheet.create({
         flexDirection: 'row',
     },
     thumbnail: {
-        width: Dimensions.get('window').width-80,
-        height: Dimensions.get('window').height/6,
+        width: Dimensions.get('window').width - 80,
+        height: Dimensions.get('window').height / 6,
         borderRadius: 10
     },
     meta: {
@@ -56,11 +56,11 @@ export default StyleSheet.create({
     date: {
         color: 'white',
         fontSize: 15,
-        marginLeft: Dimensions.get('window').width/15
+        marginLeft: Dimensions.get('window').width / 15
     },
     time: {
         color: 'grey',
-        marginLeft: Dimensions.get('window').width/15
+        marginLeft: Dimensions.get('window').width / 15
     },
     actions: {
         flex: 3,
@@ -77,5 +77,26 @@ export default StyleSheet.create({
         top: '40%',
         left: '48%',
         transform: [{ translateX: -12 }, { translateY: -12 }], // half the size of your icon
+    },
+    downloader: {
+        width: Dimensions.get('window').width/1.15,
+        height: 90,
+        backgroundColor: '#1a1a1a',
+        borderRadius: 10
+    },
+    status: {
+        flex: 1,
+        flexDirection: 'row'
+    },
+    info: {
+        flex: 1,
+        justifyContent: 'center',
+    },
+    info_text: {
+        color: 'white'
+    },
+    progress: {
+        flex: 1,
+        alignItems: 'center'
     }
 })
