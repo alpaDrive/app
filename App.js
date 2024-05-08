@@ -13,6 +13,7 @@ import Empty from './src/screens/Empty/Empty';
 import Pairing from './src/screens/Pairing/Pairing';
 import Stats from './src/screens/Stats/Stats';
 import { Recordings } from './src/screens/Recordings/Recordings';
+import Player from './src/screens/Player/Player';
 
 const Stack = createNativeStackNavigator()
 
@@ -31,6 +32,7 @@ export default function App() {
         <Stack.Screen name='Connect' component={Connect} options={{ headerShown: false, animation: 'slide_from_right' }} />
         <Stack.Screen name='Stats' component={Stats} options={{ headerShown: false, animation: 'slide_from_right' }} />
         <Stack.Screen name='Recordings' component={Recordings} options={{ headerShown: false, animation: 'slide_from_right' }} />
+        <Stack.Screen name='Player' component={Player} options={{ headerShown: false, animation: 'slide_from_bottom' }} />
       </Stack.Navigator>
       <StatusBar style='auto' />
     </NavigationContainer>

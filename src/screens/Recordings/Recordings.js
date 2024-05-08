@@ -79,7 +79,13 @@ export const Recordings = ({ navigation }) => {
         const { date, time } = formatTimestamp(video.timestamp);
 
         return <View style={styles.card}>
-            <View style={styles.top}>
+            <Pressable onPress={() => {
+                navigation.navigate('Player', {
+                    vid: vid.current,
+                    uid: uid.current,
+                    name: video.name
+                })
+            }} style={styles.top}>
                 <Image
                     style={styles.thumbnail}
                     source={{
@@ -89,7 +95,7 @@ export const Recordings = ({ navigation }) => {
                 <View style={styles.play}>
                     <AntDesign name="playcircleo" size={50} color="white" />
                 </View>
-            </View>
+            </Pressable>
             <View style={styles.details}>
                 <View style={styles.meta}>
                     <Text style={styles.date}>{date}</Text>
