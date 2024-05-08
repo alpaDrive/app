@@ -8,7 +8,7 @@ import { Entypo } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import styles from './styles'
 import { get_recordings } from '../../api/vehicle';
-import { getVid } from '../../api/auth';
+import { getUid, getVid } from '../../api/auth';
 import configs from '../../assets/configs';
 
 export const Recordings = ({ navigation }) => {
@@ -17,6 +17,7 @@ export const Recordings = ({ navigation }) => {
     const [downloaded, setDownloaded] = React.useState(0)
     const [downloading, setDownloading] = React.useState(false)
     const vid = React.useRef(null)
+    const uid = React.useRef(null)
 
     function formatTimestamp(timestamp) {
         // Create a new Date object from the timestamp
@@ -47,7 +48,7 @@ export const Recordings = ({ navigation }) => {
       
         setDownloading(true)
         const downloadResumable = FileSystem.createDownloadResumable(
-          `https://${configs.CDS_URL}/video/download/${vid.current}/${name}`,
+          `https://${configs.CDS_URL}/video/download/${vid.current}/${uid.current}/${name}`,
           fileUri,
           {},
           (progress) => {
@@ -115,6 +116,7 @@ export const Recordings = ({ navigation }) => {
 
     const initialize = async () => {
         vid.current = await getVid();
+        uid.current = await getUid();
     }
 
     React.useEffect(() => {
