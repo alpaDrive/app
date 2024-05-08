@@ -85,7 +85,9 @@ export const Recordings = ({ navigation }) => {
                 navigation.navigate('Player', {
                     vid: vid.current,
                     uid: uid.current,
-                    name: video.name
+                    name: video.name,
+                    date,
+                    time
                 })
             }} style={styles.top}>
                 <Image

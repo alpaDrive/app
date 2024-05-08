@@ -35,7 +35,8 @@
     "expo-file-system": "~15.2.2",
     "expo-sharing": "~11.2.2",
     "expo-av": "~13.2.1",
-    "expo-screen-orientation": "~5.1.1"
+    "expo-screen-orientation": "~5.1.1",
+    "expo-dev-client": "~2.2.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"
