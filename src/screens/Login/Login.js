@@ -1,9 +1,8 @@
 import * as React from 'react'
-import * as SecureStore from 'expo-secure-store'
 import { View, Text, TextInput, Pressable, Alert, Keyboard, Image, ActivityIndicator } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context';
-import configs from '../../assets/configs';
 import styles from './styles';
+import { login } from '../../api/auth';
 
 const Login = ({ navigation }) => {
 
@@ -17,28 +16,15 @@ const Login = ({ navigation }) => {
         if (!id || !password) Alert.alert('Oops', "You can't leave a field blank!")
         else {
             setBuffering(true)
-            const response = await fetch(`https://${configs.SERVER_URL}/login`, {
-                method: 'POST',
-                headers: new Headers(),
-                body: JSON.stringify({
-                    "username": id,
-                    "email": id,
-                    "password": password
-                })
-            })
-            const body = await response.json()
-            if (response.ok) {
-                await SecureStore.setItemAsync("alpaDrive-user", JSON.stringify(body))
-                await SecureStore.setItemAsync("alpaDrive-vehicles", JSON.stringify(body.vehicles))
-                let screen = 'Home'
-                if (body.vehicles.length === 0) screen = 'Empty'
+            try {
+                const screen = await login(id, password);
                 navigation.reset({
                     index: 0,
                     routes: [{ name: screen }],
                 });
                 navigation.navigate(screen)
-            } else {
-                Alert.alert(JSON.stringify(body.error))
+            } catch(error) {
+                console.error(error)
             }
             setBuffering(false)
         }
@@ -85,10 +71,10 @@ const Login = ({ navigation }) => {
                 />
                 {buffering ? <View style={{ marginVertical: 32, alignItems: 'center', height: 60, justifyContent: 'center' }}>
                     <ActivityIndicator size='large' color={'#1559DC'} />
-                </View>:
-                <Pressable onPress={submit} style={styles.button}>
-                    <Text style={styles.buttontext}>Go</Text>
-                </Pressable>}
+                </View> :
+                    <Pressable onPress={submit} style={styles.button}>
+                        <Text style={styles.buttontext}>Go</Text>
+                    </Pressable>}
             </View>
             {!keyboardActive ? <View style={[styles.subtextview, { flex: 2 }]}>
                 <Text style={styles.subtexted}>Dont't have an account?</Text><Pressable onPress={() => navigation.navigate('SignUp')}><Text style={styles.sign}> Sign up</Text></Pressable>
