@@ -26,8 +26,14 @@ export default StyleSheet.create({
         paddingLeft: 5,
         paddingRight: 5
     },
-    list: {
+    placeholder: {
+        flex: 1,
+        justifyContent: 'center',
         alignItems: 'center'
+    },
+    list: {
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     card: {
         width: Dimensions.get('window').width - 40,

@@ -1,7 +1,8 @@
 import * as React from 'react'
-import { SafeAreaView, ScrollView, View, Text, Image, Modal, Pressable } from 'react-native'
+import { SafeAreaView, ScrollView, View, Text, Image, Modal, Pressable, RefreshControl } from 'react-native'
 import * as Progress from 'react-native-progress';
 import AntDesign from '@expo/vector-icons/AntDesign';
+import { Feather } from '@expo/vector-icons';
 import * as FileSystem from 'expo-file-system';
 import * as Sharing from 'expo-sharing';
 import { Entypo } from '@expo/vector-icons';
@@ -13,6 +14,7 @@ import configs from '../../assets/configs';
 
 export const Recordings = ({ navigation }) => {
 
+    const [refreshing, setRefreshing] = React.useState(false)
     const [videos, setVideos] = React.useState([])
     const [downloaded, setDownloaded] = React.useState(0)
     const [downloading, setDownloading] = React.useState(false)
@@ -45,34 +47,34 @@ export const Recordings = ({ navigation }) => {
     const share = async (name) => {
         const fileName = name; // replace with your file's name
         const fileUri = FileSystem.documentDirectory + fileName;
-      
+
         setDownloading(true)
         const downloadResumable = FileSystem.createDownloadResumable(
-          `https://${configs.CDS_URL}/video/download/${vid.current}/${uid.current}/${name}`,
-          fileUri,
-          {},
-          (progress) => {
-            setDownloaded((progress.totalBytesWritten / progress.totalBytesExpectedToWrite * 100).toFixed(2))
-          }
+            `https://${configs.CDS_URL}/video/download/${vid.current}/${uid.current}/${name}`,
+            fileUri,
+            {},
+            (progress) => {
+                setDownloaded((progress.totalBytesWritten / progress.totalBytesExpectedToWrite * 100).toFixed(2))
+            }
         );
-      
+
         try {
-          const { uri } = await downloadResumable.downloadAsync();
-          setDownloading(false)
-      
-          // Check if sharing is possible
-          if (!(await Sharing.isAvailableAsync())) {
-            alert(`Uh oh, sharing isn't available on your platform`);
-            return;
-          }
-      
-          // Share the file
-          await Sharing.shareAsync(uri);
-          await FileSystem.deleteAsync(uri);
+            const { uri } = await downloadResumable.downloadAsync();
+            setDownloading(false)
+
+            // Check if sharing is possible
+            if (!(await Sharing.isAvailableAsync())) {
+                alert(`Uh oh, sharing isn't available on your platform`);
+                return;
+            }
+
+            // Share the file
+            await Sharing.shareAsync(uri);
+            await FileSystem.deleteAsync(uri);
         } catch (e) {
-          console.error(e);
+            console.error(e);
         }
-      };
+    };
 
     const Card = ({ video }) => {
 
@@ -116,8 +118,10 @@ export const Recordings = ({ navigation }) => {
     }
 
     const refresh = async () => {
+        setRefreshing(true)
         const videos = await get_recordings();
         setVideos(videos)
+        setRefreshing(false)
     }
 
     const initialize = async () => {
@@ -146,7 +150,7 @@ export const Recordings = ({ navigation }) => {
                         </View>
                     </View>
                     <View style={styles.progress}>
-                        <Progress.Bar progress={downloaded/100} width={300} color={'#ffffff'} unfilledColor={'#595959'} height={8} borderWidth={0} />
+                        <Progress.Bar progress={downloaded / 100} width={300} color={'#ffffff'} unfilledColor={'#595959'} height={8} borderWidth={0} />
                     </View>
                 </View>
             </View>
@@ -156,11 +160,17 @@ export const Recordings = ({ navigation }) => {
             <Text style={styles.name}>Recordings</Text>
         </View>
         <View style={styles.body}>
-            <ScrollView contentContainerStyle={styles.list}>
+            {videos.length > 0 ? <ScrollView refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={refresh} />
+            } contentContainerStyle={styles.list}>
                 {videos.map((item, index) => {
                     return <Card key={index} video={item} />
                 })}
-            </ScrollView>
+            </ScrollView> :
+                <View style={styles.placeholder}>
+                    <Feather name={refreshing ? "video" : "video-off"} size={24} color="grey" />
+                    <Text style={{ color: 'grey' }}>{refreshing ? 'Loading...' : 'No videos to show'}</Text>
+                </View>}
         </View>
     </SafeAreaView>
 }
