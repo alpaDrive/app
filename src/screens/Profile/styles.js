@@ -32,7 +32,7 @@ export default StyleSheet.create({
         alignItems: 'flex-start'
     },
     buttons: {
-        flex: 1.5,
+        flex: 1.8,
         justifyContent: 'space-evenly',
         alignItems: 'center',
     },
@@ -56,7 +56,7 @@ export default StyleSheet.create({
         alignItems: 'flex-start',
     },
     signout: {
-        flex: .5,
+        flex: .2,
         justifyContent: 'center',
         alignItems: 'center'
     },

@@ -60,6 +60,16 @@ const Profile = ({ navigation }) => {
                     <AntDesign name="right" size={10} color="white" />
                 </View>
             </View>
+            <View style={styles.faq}>
+                <View style={styles.faq2}></View>
+                <Pressable onPress={() => navigation.navigate('Recordings')} style={styles.faq1}>
+                    <Text style={{ fontSize: 15, color: '#ffff' }}>Recordings</Text>
+                    <Text style={{ fontSize: 10, color: '#8D8A8A' }}>View all the recordings from your smart dashcam</Text>
+                </Pressable>
+                <View style={styles.faq2}>
+                    <AntDesign name="right" size={10} color="white" />
+                </View>
+            </View>
             {vehicle != null ? <View style={styles.faq}>
                 <View style={styles.faq2}></View>
                 <View style={styles.faq1}>
