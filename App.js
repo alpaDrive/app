@@ -1,7 +1,11 @@
+import 'expo-dev-client'
+
 import * as React from 'react'
+import * as Notifications from 'expo-notifications';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar'
+import { registerForPushNotificationsAsync, updateToken } from './src/api/notifications';
 import Login from './src/screens/Login/Login';
 import Profile from './src/screens/Profile/Profile';
 import SignUp from './src/screens/SignUp/SignUp';
@@ -14,10 +18,37 @@ import Pairing from './src/screens/Pairing/Pairing';
 import Stats from './src/screens/Stats/Stats';
 import { Recordings } from './src/screens/Recordings/Recordings';
 import Player from './src/screens/Player/Player';
+import { getVid } from './src/api/auth';
+import { Alert } from 'react-native';
 
 const Stack = createNativeStackNavigator()
 
 export default function App() {
+  const [notification, setNotification] = React.useState(undefined);
+  const notificationListener = React.useRef();
+  const responseListener = React.useRef();
+
+  React.useEffect(() => {
+    registerForPushNotificationsAsync()
+      .then(async(token) => {
+        vid = getVid();
+        if(vid) updateToken(vid, token)
+      })
+      .catch((error) => Alert.alert('expo tokens', `${error}`));
+
+    notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {
+
+    });
+
+    responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
+      console.log(response);
+    });
+
+    return () => {
+      notificationListener.current && Notifications.removeNotificationSubscription(notificationListener.current);
+      responseListener.current && Notifications.removeNotificationSubscription(responseListener.current);
+    };
+  }, []);
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName='Landing'>

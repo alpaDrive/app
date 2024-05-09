@@ -72,10 +72,10 @@ const Profile = ({ navigation }) => {
             </View>
             {vehicle != null ? <View style={styles.faq}>
                 <View style={styles.faq2}></View>
-                <View style={styles.faq1}>
+                <Pressable style={styles.faq1}>
                     <Text style={{ fontSize: 15, color: '#ffff' }}>Switch Vehicle</Text>
                     <Text style={{ fontSize: 10, color: '#8D8A8A' }}>Change the currently active vehicle</Text>
-                </View>
+                </Pressable>
                 <View style={styles.faq2}>
                     <AntDesign name="right" size={10} color="white" />
                 </View>

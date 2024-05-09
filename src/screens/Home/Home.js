@@ -94,7 +94,7 @@ const Home = ({ navigation }) => {
         };
 
         wsRef.current.onerror = (e) => {
-            console.log('WebSocket error:', e);
+            // console.log('WebSocket error:', e);
         };
 
         wsRef.current.onclose = () => {
